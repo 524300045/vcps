@@ -1,0 +1,220 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     android:background="@color/white"
+    android:orientation="vertical" >
+   
+     <LinearLayout
+         android:id="@+id/lltitle"
+         android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#33CCFF"
+        android:gravity="center"
+        >
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="系统参数设置"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+    </LinearLayout>
+    
+    <LinearLayout
+         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:gravity="top"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical" 
+        android:paddingTop="5dp"
+        >
+        
+         <LinearLayout
+             android:id="@+id/tvcomsettotal"
+             android:layout_width="match_parent"
+             android:layout_height="50dp"
+             android:layout_marginLeft="10dp"
+             android:gravity="center_vertical|left"
+             android:orientation="horizontal" >
+        
+          <ImageView
+          android:id="@+id/imgcomset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/u970" >
+       </ImageView>
+       
+           <TextView
+               android:id="@+id/tvcomset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#333333"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="23sp"
+        android:text="通讯设置" />
+           
+            
+                    
+         </LinearLayout>
+  
+          <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#000000" />
+          
+          <LinearLayout
+              android:id="@+id/tvzuoyetotal"
+              android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:layout_marginLeft="10dp"
+              android:gravity="center_vertical|left"
+              android:orientation="horizontal" >
+        
+          <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgzuoyeset"
+        android:src="@drawable/u970" >
+       </ImageView>
+       
+           <TextView
+               android:id="@+id/tvzuoye"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="10dp"
+               android:layout_marginRight="10dp"
+               android:gravity="center"
+               android:text="作业设置"
+               android:textColor="#333333"
+               android:textSize="23sp" />
+           
+             
+                    
+         </LinearLayout>
+  
+          <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#000000" />
+          
+          <LinearLayout
+              android:id="@+id/tvanquantotal"
+              android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:layout_marginLeft="10dp"
+              android:gravity="center_vertical|left"
+              android:orientation="horizontal" >
+        
+          <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        
+        android:src="@drawable/u970" >
+       </ImageView>
+       
+           <TextView
+               android:id="@+id/tvanquan"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="10dp"
+               android:layout_marginRight="10dp"
+               android:gravity="center"
+               android:text="安全设置"
+               android:textColor="@color/light_gray"
+               android:textSize="23sp" />
+           
+                
+                    
+         </LinearLayout>
+  
+          <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#000000" />
+          
+          <LinearLayout
+              android:id="@+id/tvsaomiaototal"
+              android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:layout_marginLeft="10dp"
+              android:gravity="center_vertical|left"
+              android:orientation="horizontal" >
+        
+          <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        
+        android:src="@drawable/u970" >
+       </ImageView>
+       
+           <TextView
+               android:id="@+id/tvsaomiao"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="10dp"
+               android:layout_marginRight="10dp"
+               android:gravity="center"
+               android:text="扫描设置"
+               android:textColor="#333333"
+               android:textSize="23sp" />
+           
+              
+                    
+         </LinearLayout>
+  
+          <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#000000" />
+          
+          <LinearLayout
+              android:id="@+id/tvshujutotal"
+              android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:layout_marginLeft="10dp"
+              android:gravity="center_vertical|left"
+              android:orientation="horizontal" >
+        
+          <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        
+        android:src="@drawable/u970" >
+       </ImageView>
+       
+           <TextView
+               android:id="@+id/tvshujutotal"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="10dp"
+               android:layout_marginRight="10dp"
+               android:gravity="center"
+               android:text="数据设置"
+               android:textColor="#333333"
+               android:textSize="23sp" />
+           
+                
+    
+     
+                    
+         </LinearLayout>
+  
+          <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#000000" />
+          
+         
+         
+         
+          
+     
+     </LinearLayout>
+
+</LinearLayout>

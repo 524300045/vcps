@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<gradient android:startColor="@color/green"
+        android:endColor="@color/green"
+        android:angle="270"/>-->
+    <!--<corners android:topLeftRadius="4dp"
+        android:topRightRadius="4dp"
+        android:bottomLeftRadius="4dp"
+        android:bottomRightRadius="4dp"/>-->
+    <!-- solid表示填充颜色 -->
+    <solid android:color="#cc000000" />
+    <!-- corners表示圆角 -->
+    <corners android:radius="5dp" />
+
+</shape>

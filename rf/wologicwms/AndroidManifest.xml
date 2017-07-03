@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wologic"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="18" />
+
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" >
+    </uses-permission>
+    <!-- 设置时区的权限 -->
+    <uses-permission android:name="android.permission.SET_TIME_ZONE" />
+    <!-- 创建删除文件的权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
+    <!-- 获得联系人信息，机器信息等权限 -->
+	<uses-permission android:name="android.permission.READ_PHONE_STATE">
+	</uses-permission>
+	<!-- 获得允许不同应用之间的交互权限 -->
+	<uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <application
+        android:name="com.wologic.application.MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/wologic"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoTitleBar" >
+        <activity
+            android:name="com.wologic.ui.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.SplashActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+           </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wologic.ui.GoodsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.CommunicationSetActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.ZuoYeSetActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.MainRuKuActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.RuKuGoodsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.GoodsDangAnActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.LoginActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.MoreActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.MainChuKuActivity"
+            	android:screenOrientation="portrait"
+              android:windowSoftInputMode="stateHidden|stateUnchanged">
+        </activity>
+        <activity
+            android:name="com.wologic.ui.ChuKuGoodsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged">
+        </activity>
+        <activity
+            android:name="com.wologic.ui.MainPanDianActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.PanDianGoodsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.AnQuanSetActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.ScanSetActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.DataSetActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.OperationRuKuActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.OperationChuKuActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.OperationPanDianActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.MipcaActivityCapture"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.wologic.ui.OpenFileDialogActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wologic.ui.SaveFileDialogActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+            </intent-filter>
+        </activity>
+        
+    </application>
+
+</manifest>

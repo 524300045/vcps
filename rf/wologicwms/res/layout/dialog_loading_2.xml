@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.wologic.control"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_loading_bg"
+    android:paddingBottom="5dip"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip" >
+
+ 
+     <com.wologic.control.ProgressWheel
+        xmlns:wheel="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/loading"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerInParent="true"
+        wheel:matProg_barColor="@color/white"
+        wheel:matProg_barSpinCycleTime="1000"
+        wheel:matProg_barWidth="3dip"
+        wheel:matProg_circleRadius="30dp"
+        wheel:matProg_progressIndeterminate="true" />
+    
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerInParent="true"
+        android:textColor="@color/white"
+        android:textSize="10sp" 
+        android:gravity="center"
+        android:text="12%"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loading"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dip"
+        android:text="正在加载..."
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+</RelativeLayout>

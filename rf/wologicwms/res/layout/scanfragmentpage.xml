@@ -1,0 +1,446 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Splash" >
+  
+     <LinearLayout
+         android:id="@+id/lltitle"
+         android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#33CCFF"
+        android:gravity="center"
+          android:orientation="horizontal"
+        >
+        
+           <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:background="#33CCFF"
+        android:gravity="center"
+          android:orientation="vertical"
+        >
+          <TextView
+              android:id="@+id/tvtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="3dp"
+        android:text="沃杰智能仓库管理系统"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+               
+               <TextView
+                   android:id="@+id/tvversion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="Ver.12.06"
+        android:textColor="@color/white"
+        android:textSize="10sp" />
+        
+               </LinearLayout>
+               
+             
+            <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="未授权"
+        android:textColor="@color/black"
+        android:textSize="11sp" />
+         
+      
+    </LinearLayout>
+    
+     
+    
+    <LinearLayout
+        android:id="@+id/llmokuan"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lltitle"
+        android:gravity="center" >
+      
+        <TableLayout               
+        android:id="@+id/table1"  
+        android:layout_width="fill_parent"  
+        android:layout_height="wrap_content"  
+        android:stretchColumns="*"
+        android:padding="3dip">  
+        
+            <!--   <TableRow>  
+             <ImageView
+         android:id="@+id/imgpandian"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:layout_height="48dp"
+        android:src="@drawable/pandian" />
+               <ImageView
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:layout_height="48dp"
+        android:src="@drawable/tuihuo" />
+               
+                 <ImageView
+                     android:id="@+id/imgchuku"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:layout_height="48dp"
+        android:src="@drawable/chuhuo" />
+                 
+                   <ImageView
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:layout_height="48dp"
+        android:src="@drawable/shouhuo" />
+             
+        </TableRow>  
+        
+        <TableRow>  
+             <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:text="盘点" />
+              <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:layout_weight="1"
+        android:gravity="center"
+         android:textColor="@color/black"
+        android:text="退货" />
+               <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:layout_weight="1"
+        android:gravity="center"
+         android:textColor="@color/black"
+        android:text="出货" />
+                <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:layout_weight="1"
+        android:gravity="center"
+         android:textColor="@color/black"
+        android:text="收货" />
+        </TableRow>  
+          
+              <TextView
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+         android:layout_weight="1"
+        android:gravity="center"
+         android:textColor="@color/black"
+        android:text="" />
+       
+           <TableRow >  
+             <ImageView
+                 android:id="@+id/imgfahuo"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:layout_height="48dp"
+        android:src="@drawable/fahuo" />
+               <ImageView
+                   android:id="@+id/imgruku"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:layout_height="48dp"
+        android:src="@drawable/ruku" />
+               
+                 <ImageView
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:layout_height="48dp"
+        android:src="@drawable/dihuo" />
+                 
+                   <ImageView
+                        android:id="@+id/imgmore"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:layout_height="48dp"
+        android:src="@drawable/geduo" />
+             
+        </TableRow>  
+        
+        <TableRow>  
+             <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:text="发货" />
+              <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:layout_weight="1"
+        android:gravity="center"
+         android:textColor="@color/black"
+        android:text="入库" />
+               <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:layout_weight="1"
+        android:gravity="center"
+         android:textColor="@color/black"
+        android:text="订货" />
+                <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:layout_weight="1"
+        android:gravity="center"
+         android:textColor="@color/black"
+        android:text="更多>" />
+        </TableRow>   -->
+                 
+          
+    </TableLayout>  
+    
+    </LinearLayout>
+    
+     
+    
+     
+     
+     
+     <LinearLayout
+         android:id="@+id/lllv"
+         android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/llmokuan"
+          android:layout_above="@+id/lltable"
+          android:orientation="horizontal"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:layout_marginTop="5dp"
+        android:gravity="center"
+        >
+       
+             <ListView
+                 android:id="@+id/lv"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:cacheColorHint="#00000000"
+                 android:dividerHeight="1dp"
+                 android:fadingEdge="none"
+                 android:fastScrollEnabled="true" >
+
+        </ListView>
+        
+         
+    </LinearLayout>
+    
+     
+        <LinearLayout
+            android:id="@+id/lltable"
+         android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="20dp"
+          android:layout_marginRight="20dp"
+          android:layout_alignParentBottom="true" 
+          android:layout_marginBottom="15dp"
+           android:layout_weight="1"
+          android:orientation="horizontal"
+        >
+                     
+     <TableLayout
+        android:id="@+id/table1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TableRow
+            android:background="#797979"
+            android:orientation="horizontal"
+            android:paddingLeft="0.5dip"
+            android:paddingRight="0.5dip"
+            android:paddingTop="1dip" >
+
+               <LinearLayout
+         android:id="@+id/lltitle"
+         android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginBottom="0.5dip"
+              android:layout_marginLeft="0.5dip"
+              android:layout_weight="1"
+        >
+        
+                   
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/u1" >
+    </ImageView>
+"
+
+          <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+      android:textColor="#333333"
+        android:text="简单扫描" />
+                 </LinearLayout>
+                      <LinearLayout
+       
+         android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:gravity="center"
+          android:layout_marginBottom="0.5dip"
+              android:layout_marginLeft="0.5dip"
+              android:layout_weight="1"
+        >
+         <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/u2" >
+    </ImageView>
+"
+
+          <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#333333"
+        android:text="查重扫描" />
+        
+                 </LinearLayout>
+
+                      <LinearLayout
+                          android:id="@+id/wologicWireless"
+                          android:layout_width="match_parent"
+                          android:layout_height="50dp"
+                          android:layout_marginBottom="0.5dip"
+                          android:layout_marginLeft="0.5dip"
+                          android:layout_weight="1"
+                          android:background="@color/white"
+                          android:gravity="center"
+                          android:orientation="horizontal" >
+
+         <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/u3" >
+    </ImageView>
+
+
+          <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+         android:textColor="#333333"
+        android:text="无线枪" />
+        
+                 </LinearLayout>
+           
+        </TableRow>
+
+         <TableRow
+            android:background="#797979"
+            android:orientation="horizontal"
+            android:paddingLeft="0.5dip"
+            android:paddingRight="0.5dip"
+            android:paddingTop="1dip"
+           
+             >
+
+             <LinearLayout
+       
+         android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:gravity="center"
+          android:layout_marginBottom="0.5dip"
+              android:layout_marginLeft="0.5dip"
+              android:layout_weight="1"
+        >
+         <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/u46" >
+    </ImageView>
+"
+
+          <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#333333"
+        android:text="扫扫查查" />
+        
+                 </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/PrintTag"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginBottom="0.5dip"
+                            android:layout_marginLeft="0.5dip"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:orientation="horizontal" >
+
+         <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/u50" >
+    </ImageView>
+"
+
+          <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#333333"
+        android:text="打印标签" />
+        
+                 </LinearLayout>
+
+                         <LinearLayout
+                             android:id="@id/wologiccalculator"
+                             android:layout_width="match_parent"
+                             android:layout_height="50dp"
+                             android:layout_marginBottom="0.5dip"
+                             android:layout_marginLeft="0.5dip"
+                             android:layout_weight="1"
+                             android:background="@color/white"
+                             android:gravity="center"
+                             android:orientation="horizontal" >
+
+         <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/u44" >
+    </ImageView>
+"
+
+          <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+       android:textColor="#333333"
+        android:text="计算器" />
+        
+                 </LinearLayout>
+           
+        </TableRow>
+       
+    </TableLayout>
+                  
+           
+             
+              </LinearLayout>
+
+</RelativeLayout>

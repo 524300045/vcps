@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+     android:gravity="top"  
+    
+    >
+    
+<LinearLayout
+         android:id="@+id/ll001"
+         android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/llmokuan"
+          android:orientation="horizontal"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+        android:gravity="center"
+        android:background="@drawable/border"
+        >
+                <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/pandian" />
+             
+                  <LinearLayout
+         android:layout_width="0dp"
+          android:layout_weight="6.5"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/llmokuan"
+          android:orientation="vertical"
+          android:gravity="left"
+        >
+        
+                      
+           <TextView
+         android:id="@+id/tvcode"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+         android:visibility="gone"
+        android:textSize="12sp"
+     
+        android:text="" />
+           
+        
+           <TextView
+         android:id="@+id/tvruku"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+         android:layout_weight="1"
+        android:gravity="left"
+        android:textSize="12sp"
+         android:textColor="@color/black"
+        android:text="" />
+           
+               <TextView
+                    android:id="@+id/tvnum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="12sp"
+         android:textColor="@color/black"
+        android:text="[总数] 8" />
+         </LinearLayout>
+         
+                      <LinearLayout
+         android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/llmokuan"
+           android:layout_weight="4"
+          android:orientation="vertical"
+          android:gravity="center"
+        >
+        
+           <TextView
+                android:id="@+id/tvtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="12sp"
+         android:textColor="@color/black"
+        android:text="2017/2/15 17:56" />
+           
+               <TextView
+                    android:id="@+id/tvcount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="12sp"
+         android:textColor="@color/black"
+        android:text="[条数] 3" />
+         </LinearLayout>
+         
+                    <TextView
+            android:id="@+id/tvstate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="25sp"
+         android:textColor="#FF9933"
+        android:text="○" />     
+         
+    </LinearLayout>
+  <LinearLayout android:layout_width="fill_parent"   android:layout_height="2dp" android:background="#F0F0F0">
+    </LinearLayout>
+</LinearLayout>
+
+
