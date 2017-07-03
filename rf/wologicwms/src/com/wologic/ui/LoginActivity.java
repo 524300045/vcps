@@ -72,7 +72,6 @@ public class LoginActivity extends Activity implements OnItemClickListener {
 		et_userName.setText("001");
 		et_userPassword.setText("001");
 		
-		userDao = new UserDao();
 		btn_login.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -104,24 +103,23 @@ public class LoginActivity extends Activity implements OnItemClickListener {
 			return;
 		}
 
-		User user = userDao.GetUserByNameAndPwd(code, pwd);
+		/*User user = userDao.GetUserByNameAndPwd(code, pwd);
 		if (user == null) {
 
 			// 用户名或密码错误
 			Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_LONG)
 					.show();
 			return;
-		}
+		}*/
 		
 		
-        //Common.deviceid=getUniquePsuedoID();
 		SharedPreferences.Editor editor = getSharedPreferences("data",
 				MODE_PRIVATE).edit();
 		editor.putString("username", code);
 		editor.commit();
 		app.setUsername(code);
 		Common.userID = code;
-		Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+		Intent intent = new Intent(LoginActivity.this, MainTwoActivity.class);
 		startActivity(intent);
 		finish();
 	}

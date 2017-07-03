@@ -12,9 +12,9 @@
        android:layout_above="@+id/imageView2"
         android:src="@drawable/u4" >
     </ImageView>
-"
 
-    <ImageView
+
+  <!--   <ImageView
          
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
@@ -22,7 +22,7 @@
        
         android:layout_centerHorizontal="true"
          android:layout_centerVertical="true"
-        android:src="@drawable/u6" />
+        android:src="@drawable/u6" /> -->
 
       <TextView
         android:id="@+id/textView1"
@@ -32,7 +32,7 @@
         android:gravity="center"
         android:layout_margin="10dp"
          android:textColor="#169BD5"
-        android:text="www.wologic.com" />
+        android:text="VCPS" />
       
           <TextView
         android:id="@+id/textView1"
@@ -43,7 +43,7 @@
            android:layout_marginBottom="20dp"
            android:textSize="15dp"
             android:textColor="#169BD5"
-        android:text="Copyright © 2017 wologic Co.,Ltd" />
+        android:text="Copyright © 2017 vcps Co.,Ltd" />
   
 
 </RelativeLayout>

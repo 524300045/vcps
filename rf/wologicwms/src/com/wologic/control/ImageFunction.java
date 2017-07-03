@@ -27,23 +27,23 @@ public class ImageFunction extends LinearLayout {
        LayoutInflater.from(context).inflate(R.layout.imgfunction, this, true);  
        img=(ImageView) findViewById(R.id.img);
        img.setTag(functionId);
-       if(functionId.equals("pd"))
+       if(functionId.equals("fj"))
        {
     	   img.setImageResource(R.drawable.pandian);
        }
-       if(functionId.equals("th"))
+       if(functionId.equals("qxfj"))
        {
     	   img.setImageResource(R.drawable.tuihuo);
        }
-       if(functionId.equals("ch"))
+       if(functionId.equals("ex"))
        {
     	   img.setImageResource(R.drawable.chuhuo);
        }
-       if(functionId.equals("sh"))
+       if(functionId.equals("ck"))
        {
     	   img.setImageResource(R.drawable.shouhuo);
        }
-       if(functionId.equals("fh"))
+       if(functionId.equals("exit"))
        {
     	   img.setImageResource(R.drawable.fahuo);
        }
