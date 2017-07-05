@@ -1,11 +1,14 @@
 package com.wologic.control;
 
 import com.wologic.R;
+import com.wologic.ui.CancelPickerActivity;
+import com.wologic.ui.ExecActivity;
 import com.wologic.ui.GoodsActivity;
 import com.wologic.ui.MainChuKuActivity;
 import com.wologic.ui.MainPanDianActivity;
 import com.wologic.ui.MainRuKuActivity;
 import com.wologic.ui.MoreActivity;
+import com.wologic.ui.PickerActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -63,6 +66,7 @@ public class ImageFunction extends LinearLayout {
        img.setOnClickListener(mListener);
 	}
 	
+
  	
    	OnClickListener  mListener = new OnClickListener() {  
            @Override  
@@ -70,21 +74,25 @@ public class ImageFunction extends LinearLayout {
         	   
         	  String functionId=v.getTag().toString();
         	
-        	  if(functionId.equals("pd"))
+        	  if(functionId.equals("fj"))
               {
-        		  context.startActivity(new Intent(getContext(), MainPanDianActivity.class));
+        		  context.startActivity(new Intent(getContext(), PickerActivity.class));
               }
-              if(functionId.equals("th"))
+              if(functionId.equals("qxfj"))
               {
-           	  
+            	  context.startActivity(new Intent(getContext(), CancelPickerActivity.class));
               }
-              if(functionId.equals("ch"))
+              if(functionId.equals("ex"))
               {
-            	  context.startActivity(new Intent(getContext(), MainChuKuActivity.class));
+            	  context.startActivity(new Intent(getContext(), ExecActivity.class));
               }
-              if(functionId.equals("sh"))
+              if(functionId.equals("exit"))
               {
-           	   img.setImageResource(R.drawable.shouhuo);
+            	  final Intent intent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
+                  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                  context.startActivity(intent);
+                  
+           	   //img.setImageResource(R.drawable.shouhuo);
               }
               if(functionId.equals("fh"))
               {

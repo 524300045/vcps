@@ -64,7 +64,7 @@ public class ScanFragment extends Fragment {
 		View view = inflater.inflate(R.layout.scanfragmentpage, null);
 		tl = (TableLayout) view.findViewById(R.id.table1);
 		tvtitle = (TextView) view.findViewById(R.id.tvtitle);
-		tvversion = (TextView) view.findViewById(R.id.tvversion);
+	
 		wologiccalculator = (LinearLayout)view.findViewById(R.id.wologiccalculator);
 		ruKuDao = new RuKuDao();
 		itemDataDao = new ItemDataDao();

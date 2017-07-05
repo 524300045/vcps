@@ -28,29 +28,29 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="3dp"
-        android:text="仓库管理系统"
+        android:text="VCPS仓库管理系统"
         android:textColor="@color/white"
         android:textSize="20sp" />
                
-               <TextView
+               <!-- <TextView
                    android:id="@+id/tvversion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="right"
         android:text="Ver.12.06"
         android:textColor="@color/white"
-        android:textSize="10sp" />
+        android:textSize="10sp" /> -->
         
                </LinearLayout>
                
              
-            <TextView
+            <!-- <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="未授权"
         android:textColor="@color/black"
-        android:textSize="11sp" />
+        android:textSize="11sp" /> -->
          
       
     </LinearLayout>
@@ -237,210 +237,6 @@
     </LinearLayout>
     
      
-        <LinearLayout
-            android:id="@+id/lltable"
-         android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="20dp"
-          android:layout_marginRight="20dp"
-          android:layout_alignParentBottom="true" 
-          android:layout_marginBottom="15dp"
-           android:layout_weight="1"
-          android:orientation="horizontal"
-        >
-                     
-     <TableLayout
-        android:id="@+id/table1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        >
-
-        <TableRow
-            android:background="#797979"
-            android:orientation="horizontal"
-            android:paddingLeft="0.5dip"
-            android:paddingRight="0.5dip"
-            android:paddingTop="1dip" >
-
-               <LinearLayout
-         android:id="@+id/lltitle"
-         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginBottom="0.5dip"
-              android:layout_marginLeft="0.5dip"
-              android:layout_weight="1"
-        >
         
-                   
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/u1" >
-    </ImageView>
-"
-
-          <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-      android:textColor="#333333"
-        android:text="简单扫描" />
-                 </LinearLayout>
-                      <LinearLayout
-       
-         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:gravity="center"
-          android:layout_marginBottom="0.5dip"
-              android:layout_marginLeft="0.5dip"
-              android:layout_weight="1"
-        >
-         <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/u2" >
-    </ImageView>
-"
-
-          <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="#333333"
-        android:text="查重扫描" />
-        
-                 </LinearLayout>
-
-                      <LinearLayout
-                          android:id="@+id/wologicWireless"
-                          android:layout_width="match_parent"
-                          android:layout_height="50dp"
-                          android:layout_marginBottom="0.5dip"
-                          android:layout_marginLeft="0.5dip"
-                          android:layout_weight="1"
-                          android:background="@color/white"
-                          android:gravity="center"
-                          android:orientation="horizontal" >
-
-         <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/u3" >
-    </ImageView>
-
-
-          <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-         android:textColor="#333333"
-        android:text="无线枪" />
-        
-                 </LinearLayout>
-           
-        </TableRow>
-
-         <TableRow
-            android:background="#797979"
-            android:orientation="horizontal"
-            android:paddingLeft="0.5dip"
-            android:paddingRight="0.5dip"
-            android:paddingTop="1dip"
-           
-             >
-
-             <LinearLayout
-       
-         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:gravity="center"
-          android:layout_marginBottom="0.5dip"
-              android:layout_marginLeft="0.5dip"
-              android:layout_weight="1"
-        >
-         <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/u46" >
-    </ImageView>
-"
-
-          <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="#333333"
-        android:text="扫扫查查" />
-        
-                 </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/PrintTag"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_marginBottom="0.5dip"
-                            android:layout_marginLeft="0.5dip"
-                            android:layout_weight="1"
-                            android:background="@color/white"
-                            android:gravity="center"
-                            android:orientation="horizontal" >
-
-         <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/u50" >
-    </ImageView>
-"
-
-          <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="#333333"
-        android:text="打印标签" />
-        
-                 </LinearLayout>
-
-                         <LinearLayout
-                             android:id="@id/wologiccalculator"
-                             android:layout_width="match_parent"
-                             android:layout_height="50dp"
-                             android:layout_marginBottom="0.5dip"
-                             android:layout_marginLeft="0.5dip"
-                             android:layout_weight="1"
-                             android:background="@color/white"
-                             android:gravity="center"
-                             android:orientation="horizontal" >
-
-         <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/u44" >
-    </ImageView>
-"
-
-          <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-       android:textColor="#333333"
-        android:text="计算器" />
-        
-                 </LinearLayout>
-           
-        </TableRow>
-       
-    </TableLayout>
-                  
-           
-             
-              </LinearLayout>
 
 </RelativeLayout>

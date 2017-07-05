@@ -4,20 +4,20 @@
     android:layout_height="match_parent"
     android:background="@color/white" >
 
-    <ImageView
+    <!-- <ImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dip"
-        android:src="@drawable/u6" />
+        android:src="@drawable/u6" /> -->
 
     <RelativeLayout
         android:id="@+id/rl_userName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/logo"
-        android:layout_marginTop="30dip"
+        
+        android:layout_marginTop="90dip"
         android:paddingLeft="12dip"
         android:paddingRight="12dip" >
 

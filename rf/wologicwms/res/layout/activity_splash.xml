@@ -5,13 +5,13 @@
     android:background="@color/white"
     tools:context=".Splash" >
 
-    <ImageView
+  <!--   <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
        android:layout_above="@+id/imageView2"
         android:src="@drawable/u4" >
-    </ImageView>
+    </ImageView> -->
 
 
   <!--   <ImageView

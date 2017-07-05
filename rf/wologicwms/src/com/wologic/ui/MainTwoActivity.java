@@ -58,7 +58,7 @@ public class MainTwoActivity extends Activity {
 		setContentView(R.layout.scanfragmentpage);
 		tl = (TableLayout)findViewById(R.id.table1);
 		tvtitle = (TextView)findViewById(R.id.tvtitle);
-		tvversion = (TextView)findViewById(R.id.tvversion);
+		
 		wologiccalculator = (LinearLayout)findViewById(R.id.wologiccalculator);
 		init();
 	}
@@ -80,10 +80,10 @@ public class MainTwoActivity extends Activity {
 		wThree.setFuctionname("异常处理(F4)");
 		
 		
-		WFuction wfour=new WFuction();
+		/*WFuction wfour=new WFuction();
 		wfour.setFuctionid("ck");
 		wfour.setFuctionname("出库发运(F5)");
-		
+		*/
 		
 		WFuction wexit=new WFuction();
 		wexit.setFuctionid("exit");
@@ -93,18 +93,18 @@ public class MainTwoActivity extends Activity {
 		list.add(wone);
 		list.add(wtwo);
 		list.add(wThree);
-		list.add(wfour);
+		//list.add(wfour);
 		list.add(wexit);
 		
 		
 		if (list != null && list.size() > 0) {
-			if (list.size() > 4) {
+			if (list.size() >= 4) {
 
 				TableRow tableRow1 = new TableRow(MainTwoActivity.this);
 				TableRow tableRow2 = new TableRow(MainTwoActivity.this);
 				tl.addView(tableRow1);
 				tl.addView(tableRow2);
-				for (int i = 0; i < 4; i++) {
+				for (int i = 0; i < 2; i++) {
 					ImageView img = new ImageView(MainTwoActivity.this);
 					
 					ImageFunction imgFunction = new ImageFunction(MainTwoActivity.this,list.get(i).getFuctionid());
@@ -128,7 +128,7 @@ public class MainTwoActivity extends Activity {
 				TableRow tableRow4 = new TableRow(MainTwoActivity.this);
 				tl.addView(tableRow3);
 				tl.addView(tableRow4);
-				for (int i = 4; i < list.size(); i++) {
+				for (int i = 2; i < 4; i++) {
 					ImageView img = new ImageView(MainTwoActivity.this);
 					img.setImageResource(R.drawable.pandian);
 					ImageFunction imgFunction = new ImageFunction(MainTwoActivity.this,list.get(i).getFuctionid());
@@ -141,6 +141,25 @@ public class MainTwoActivity extends Activity {
 					tableRow3.addView(imgFunction);
 					tableRow4.addView(textView);
 				}
+				
+				/*TableRow tableRow5 = new TableRow(MainTwoActivity.this);
+				TableRow tableRow6 = new TableRow(MainTwoActivity.this);
+				tl.addView(tableRow5);
+				tl.addView(tableRow6);
+				
+				for (int i = 4; i < list.size(); i++) {
+					ImageView img = new ImageView(MainTwoActivity.this);
+					img.setImageResource(R.drawable.pandian);
+					ImageFunction imgFunction = new ImageFunction(MainTwoActivity.this,list.get(i).getFuctionid());
+
+					TextView textView = new TextView(MainTwoActivity.this);
+					textView.setGravity(Gravity.CENTER);
+					textView.setTextColor(Color.parseColor("#000000"));
+					textView.setText(list.get(i).getFuctionname());
+
+					tableRow5.addView(imgFunction);
+					tableRow6.addView(textView);
+				}*/
 
 			} else {
 				TableRow tableRow1 = new TableRow(MainTwoActivity.this);
