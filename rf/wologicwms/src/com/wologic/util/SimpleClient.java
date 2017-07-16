@@ -1,6 +1,11 @@
 package com.wologic.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -202,5 +207,52 @@ public class SimpleClient {
 //		Log.v("strResult", strResult);
 //		return strResult;
 //	}
+	
+	
+	public static String httpPost(String url, String json) {
+		try {
+		URL u = new URL(url);
+		HttpURLConnection httpURLConnection = (HttpURLConnection) u.openConnection();
+		//httpURLConnection.setConnectTimeout(10);
+		httpURLConnection.setDoInput(true);
+		httpURLConnection.setDoOutput(true);
+		httpURLConnection.setRequestMethod("POST");
+		httpURLConnection.setUseCaches(false);
+
+		httpURLConnection.setRequestProperty("Content-Type",
+		"application/json");
+
+		httpURLConnection.setRequestProperty("Content-Length",
+		String.valueOf(json.getBytes().length));
+
+		OutputStream outputStream = httpURLConnection.getOutputStream();
+		outputStream.write(json.getBytes());
+
+		int response = httpURLConnection.getResponseCode();
+		if (response == HttpURLConnection.HTTP_OK) {
+		InputStream inptStream = httpURLConnection.getInputStream();
+		return dealResponseResult(inptStream);
+		}
+		} catch (Exception e) {
+		e.printStackTrace();
+		}
+		return "";
+		}
+
+		private static String dealResponseResult(InputStream inputStream) {
+		String resultData = null;
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		byte[] data = new byte[1024];
+		int len = 0;
+		try {
+		while ((len = inputStream.read(data)) != -1) {
+		byteArrayOutputStream.write(data, 0, len);
+		}
+		} catch (IOException e) {
+		e.printStackTrace();
+		}
+		resultData = new String(byteArrayOutputStream.toByteArray());
+		return resultData;
+		}
 
 }

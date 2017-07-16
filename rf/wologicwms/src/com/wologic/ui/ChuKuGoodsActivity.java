@@ -63,7 +63,7 @@ public class ChuKuGoodsActivity extends Activity implements OnItemClickListener 
 	private String itemNo;// Èë¿âµ¥ºÅ
 	private TextView tvMsg, tvpinming, tvunit, tvprice, tvtotalscannum,
 			tvtotalnum;
-	private ListView lvnoend, lvend;
+	private ListView lvnoend;
 	private ImageView imgfind,imgscan;
 	private Button btnSure;
 	private TextView tbBack;

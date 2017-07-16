@@ -6,5 +6,5 @@ public class Constant {
    public static int version=1;
    
    //Urlµÿ÷∑
-   public static String url="http://mboffice.gnway.org:778/wologic";
+   public static String url=" http://192.168.0.8:8089/webservice/services";
 }

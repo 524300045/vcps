@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="包裹分拣"
+            android:text="预加工分拣"
             android:textColor="#ffffff"
             android:textSize="18sp" />
     </RelativeLayout>
@@ -52,7 +52,65 @@
         android:gravity="top"
         android:orientation="vertical" >
 
+      
+
+        
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#EAEAEA"
+            android:gravity="top"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:paddingTop="5dp" >
+
+            
+
+            <TextView
+                android:id="@+id/tvStoreName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="朝阳大悦城"
+                android:textColor="#333333"
+                android:textSize="20sp" />
+
+            
+        </LinearLayout>
+        
+          
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"         
+            android:gravity="center_vertical|left"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="箱号"
+                android:textColor="#333333"
+                android:textSize="15sp" />
+
+            <com.wologic.control.UnderLineEditText
+                android:id="@+id/etStore"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="top"
+                android:singleLine="true"
+                android:text=""
+                android:textSize="18dip" />
+
+           
+        </LinearLayout>
+
+        
+          <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|left"
@@ -80,36 +138,8 @@
 
             
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"         
-            android:gravity="center_vertical|left"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="门店号"
-                android:textColor="#333333"
-                android:textSize="15sp" />
-
-            <com.wologic.control.UnderLineEditText
-                android:id="@+id/etStore"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="top"
-                android:singleLine="true"
-                android:text=""
-                android:textSize="18dip" />
-
-           
-        </LinearLayout>
-
+        
+          
         <TextView
             android:id="@+id/tvmsg"
             android:layout_width="wrap_content"
@@ -120,32 +150,7 @@
             android:textSize="15sp"
             android:visibility="gone" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#EAEAEA"
-            android:gravity="top"
-             android:layout_marginTop="10dp"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="总进度:"
-                android:textColor="#333333"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/tvTotalProcess"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="10/5000"
-                android:textColor="#FF0000"
-                android:textSize="15sp" />
-        </LinearLayout>
+     
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -170,42 +175,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="朝阳大悦城店"
+                android:text="大白菜"
                 android:textColor="#333333"
                 android:textSize="15sp" />
 
             
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#EAEAEA"
-            android:gravity="top"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:paddingTop="5dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="门店:"
-                android:textColor="#333333"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/tvStoreName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="西蓝花"
-                android:textColor="#333333"
-                android:textSize="15sp" />
-
-            
-        </LinearLayout>
+      
         
           <LinearLayout
             android:layout_width="match_parent"
@@ -298,28 +275,7 @@
             
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal" >
-
-             <Button
-                android:id="@+id/btnSure"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.07"
-                android:background="@drawable/shape_button"
-                android:paddingBottom="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="5dp"
-                android:text="确定(Enter)"
-                android:textColor="#333333" />
-             
-        </LinearLayout>
+       
     </LinearLayout>
 
 </LinearLayout>

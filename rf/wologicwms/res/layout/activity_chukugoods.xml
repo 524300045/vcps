@@ -317,6 +317,7 @@
 
             <ListView
                 android:id="@+id/lvnoend"
+                android:background="@color/green" 
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:fadingEdge="none"

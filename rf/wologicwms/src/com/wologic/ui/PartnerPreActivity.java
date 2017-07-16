@@ -22,7 +22,7 @@ import com.wologic.request.PackageDetailRequest;
 import com.wologic.util.Constant;
 import com.wologic.util.Toaster;
 
-public class PickerActivity extends Activity {
+public class PartnerPreActivity extends Activity {
 
 	private TextView tbBack;
 
@@ -30,14 +30,13 @@ public class PickerActivity extends Activity {
 
 	private EditText etStore;
 
-	private Button btnSure;
 
-	private TextView tvmsg,tvProcess,tvStoreName,tvGoodsName,tvModel,tvWeight,tvTotalProcess;
+	private TextView tvmsg,tvProcess,tvStoreName,tvGoodsName,tvModel,tvWeight;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_picker);
+		setContentView(R.layout.activity_partnerpre);
 		tbBack = (TextView) findViewById(R.id.tvback);
 		tbBack.setOnClickListener(new OnClickListener() {
 			@Override
@@ -45,7 +44,7 @@ public class PickerActivity extends Activity {
 				finish();
 			}
 		});
-		tvTotalProcess = (TextView) findViewById(R.id.tvTotalProcess);
+		
 		tvProcess = (TextView) findViewById(R.id.tvProcess);
 		tvStoreName = (TextView) findViewById(R.id.tvStoreName);
 		tvGoodsName = (TextView) findViewById(R.id.tvGoodsName);
@@ -55,16 +54,7 @@ public class PickerActivity extends Activity {
 		tvmsg = (TextView) findViewById(R.id.tvmsg);
 		etbarcode = (EditText) findViewById(R.id.etbarcode);
 		etStore = (EditText) findViewById(R.id.etStore);
-		btnSure = (Button) findViewById(R.id.btnSure);
-		btnSure.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-		tvTotalProcess.setText("");
+		
 		tvProcess.setText("");
 		tvStoreName.setText("");
 		tvGoodsName.setText("");
@@ -178,7 +168,6 @@ public class PickerActivity extends Activity {
 			switch (msg.what) {
 			case 1:
 				PackageAllDetail detail=(PackageAllDetail)msg.obj;
-				tvTotalProcess.setText(detail.getTotalProcess());
 				tvProcess.setText(detail.getStoreProcess());
 				tvStoreName.setText(detail.getStoredName());
 				tvGoodsName.setText(detail.getGoodsName());

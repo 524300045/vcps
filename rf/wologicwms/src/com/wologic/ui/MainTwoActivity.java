@@ -85,6 +85,15 @@ public class MainTwoActivity extends Activity {
 		wfour.setFuctionname("出库发运(F5)");
 		*/
 		
+		WFuction wPartnerPre=new WFuction();
+		wPartnerPre.setFuctionid("pp");
+		wPartnerPre.setFuctionname("供应商分拣(F5)");
+		
+		/*WFuction wPartnerOrder=new WFuction();
+		wThree.setFuctionid("po");
+		wThree.setFuctionname("订单加工分拣(F6)");*/
+		
+		
 		WFuction wexit=new WFuction();
 		wexit.setFuctionid("exit");
 		wexit.setFuctionname("重新登录(F12)");
@@ -93,6 +102,8 @@ public class MainTwoActivity extends Activity {
 		list.add(wone);
 		list.add(wtwo);
 		list.add(wThree);
+		list.add(wPartnerPre);
+		//list.add(wPartnerOrder);
 		//list.add(wfour);
 		list.add(wexit);
 		
@@ -142,7 +153,7 @@ public class MainTwoActivity extends Activity {
 					tableRow4.addView(textView);
 				}
 				
-				/*TableRow tableRow5 = new TableRow(MainTwoActivity.this);
+				TableRow tableRow5 = new TableRow(MainTwoActivity.this);
 				TableRow tableRow6 = new TableRow(MainTwoActivity.this);
 				tl.addView(tableRow5);
 				tl.addView(tableRow6);
@@ -159,34 +170,10 @@ public class MainTwoActivity extends Activity {
 
 					tableRow5.addView(imgFunction);
 					tableRow6.addView(textView);
-				}*/
-
-			} else {
-				TableRow tableRow1 = new TableRow(MainTwoActivity.this);
-				TableRow tableRow2 = new TableRow(MainTwoActivity.this);
-				tl.addView(tableRow1);
-				tl.addView(tableRow2);
-				for (WFuction item : list) {
-					ImageView img = new ImageView(MainTwoActivity.this);
-					img.setImageResource(R.drawable.pandian);
-
-					ImageFunction imgFunction = new ImageFunction(MainTwoActivity.this,item.getFuctionid());
-
-					TextView textView = new TextView(MainTwoActivity.this);
-					textView.setGravity(Gravity.CENTER);
-					textView.setTextColor(Color.parseColor("#000000"));
-					textView.setText(item.getFuctionname());
-
-					tableRow1.addView(imgFunction);
-					tableRow2.addView(textView);
 				}
 
-				TextView tvPad = new TextView(MainTwoActivity.this);
-				tvPad.setLayoutParams(new LinearLayout.LayoutParams(
-						LayoutParams.FILL_PARENT, 15, 1.0f));
-				tvPad.setGravity(Gravity.CENTER);
-				tvPad.setTextColor(Color.parseColor("#000000"));
-				tl.addView(tvPad);
+			} else {
+				
 			}
 		}
 	}

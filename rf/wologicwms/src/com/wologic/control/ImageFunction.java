@@ -8,6 +8,8 @@ import com.wologic.ui.MainChuKuActivity;
 import com.wologic.ui.MainPanDianActivity;
 import com.wologic.ui.MainRuKuActivity;
 import com.wologic.ui.MoreActivity;
+import com.wologic.ui.PartnerPickerActivity;
+import com.wologic.ui.PartnerPreActivity;
 import com.wologic.ui.PickerActivity;
 
 import android.content.Context;
@@ -50,11 +52,11 @@ public class ImageFunction extends LinearLayout {
        {
     	   img.setImageResource(R.drawable.fahuo);
        }
-       if(functionId.equals("rk"))
+       if(functionId.equals("pp"))
        {
     	   img.setImageResource(R.drawable.ruku);
        }
-       if(functionId.equals("dh"))
+       if(functionId.equals("po"))
        {
     	   img.setImageResource(R.drawable.dihuo);
        }
@@ -94,13 +96,13 @@ public class ImageFunction extends LinearLayout {
                   
            	   //img.setImageResource(R.drawable.shouhuo);
               }
-              if(functionId.equals("fh"))
+              if(functionId.equals("pp"))
               {
-           	   img.setImageResource(R.drawable.fahuo);
+            	  context.startActivity(new Intent(getContext(), PartnerPickerActivity.class));
               }
-              if(functionId.equals("rk"))
+              if(functionId.equals("po"))
               {
-  				 context.startActivity(new Intent(getContext(), MainRuKuActivity.class));
+  				 context.startActivity(new Intent(getContext(), PartnerPickerActivity.class));
               }
               if(functionId.equals("dh"))
               {
