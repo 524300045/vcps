@@ -73,14 +73,41 @@
             android:textSize="13sp" />
 
         <TextView
-            android:id="@+id/tvjindu"
-            android:layout_width="0dp"
+            android:id="@+id/tvfinishNum"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+             android:text="10"
             android:gravity="left"
-            android:text="100/102"
+   
             android:textColor="#FF0000"
             android:textSize="13sp" />
+          <TextView
+           
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:text="/"
+            android:gravity="left"
+            android:textColor="#FF0000"
+            android:textSize="13sp" />
+          
+            <TextView
+            android:id="@+id/tvTotalNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:text="100"
+            android:gravity="left"
+            android:textColor="#FF0000"
+            android:textSize="13sp" />
+            
+             <TextView
+            android:id="@+id/tvtaskcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:visibility="gone"
+            android:gravity="left"
+            android:textColor="#FF0000"
+            android:textSize="13sp" />
+            
     </LinearLayout>
 
     <LinearLayout

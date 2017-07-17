@@ -69,8 +69,10 @@ public class ContentAdapter extends BaseAdapter implements  OnClickListener {
                     .findViewById(R.id.tvmendiancode);
             holder.tvmendian = (TextView) convertView
                     .findViewById(R.id.tvmendian);
-            holder.tvjindu = (TextView) convertView
-                    .findViewById(R.id.tvjindu);
+            holder.tvfinishnum = (TextView) convertView
+                    .findViewById(R.id.tvfinishNum);
+            holder.tvtotalnum = (TextView) convertView
+                    .findViewById(R.id.tvTotalNum);
             
             holder.button = (Button) convertView.findViewById(R.id.btnSure);
             convertView.setTag(holder);
@@ -79,9 +81,10 @@ public class ContentAdapter extends BaseAdapter implements  OnClickListener {
         }
         holder.tvmendiancode.setText(mContentList.get(position).get("storeCode").toString());
         holder.tvmendian.setText(mContentList.get(position).get("storeName").toString());
-        holder.tvjindu.setText(mContentList.get(position).get("process").toString());
-        
-        holder.button.setOnClickListener(this);
+        holder.tvfinishnum.setText(mContentList.get(position).get("finishnum").toString());
+        holder.tvtotalnum.setText(mContentList.get(position).get("totalnum").toString());
+        holder.tvtaskcode.setText(mContentList.get(position).get("taskcode").toString());
+        holder.button.setOnClickListener(this);;
         holder.button.setTag(position);
         return convertView;
     }
@@ -89,8 +92,11 @@ public class ContentAdapter extends BaseAdapter implements  OnClickListener {
     public class ViewHolder {
         public TextView tvmendiancode;
         public TextView tvmendian;
-        public TextView tvjindu;
+        public TextView tvfinishnum;
+        public TextView tvtotalnum;
         public Button button;
+        
+        public TextView tvtaskcode ;
     }
 
     //响应按钮点击事件,调用子定义接口，并传入View
