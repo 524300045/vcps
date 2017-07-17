@@ -1,5 +1,7 @@
 package com.wologic.ui;
 
+import java.util.List;
+
 import org.apache.http.client.HttpClient;
 import org.json.JSONObject;
 
@@ -32,6 +34,8 @@ public class PickerActivity extends Activity {
 
 	private Button btnSure;
 
+	private String storeCode;
+	
 	private TextView tvmsg,tvProcess,tvStoreName,tvGoodsName,tvModel,tvWeight,tvTotalProcess;
 
 	@Override
@@ -101,6 +105,31 @@ public class PickerActivity extends Activity {
 				return false;
 			}
 		});
+		
+		etStore.setOnKeyListener(new OnKeyListener() {
+
+			@Override
+			public boolean onKey(View arg0, int keyCode, KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_ENTER) {
+					switch (event.getAction()) {
+					case KeyEvent.ACTION_UP:
+						String storeCode = etStore.getText().toString()
+								.trim();
+						if (storeCode.equals("")) {
+							etbarcode.selectAll();
+							Toaster.toaster("请扫描门店号!");
+							return true;
+						}
+						sumbit() ;
+						break;
+					case KeyEvent.ACTION_DOWN:
+						break;
+					}
+					return true;
+				}
+				return false;
+			}
+		});
 
 	}
 	
@@ -115,20 +144,28 @@ public class PickerActivity extends Activity {
 							.getHttpClient();
 
 					String searchUrl = Constant.url
-							+ "/packageDetail/getPackageDetailByCode";
+							+ "/packageDetail/getPackageDetailByBoxCode";
 
 					PackageDetailRequest packageDetailRequest=new PackageDetailRequest();
-					packageDetailRequest.setPackageCode(packageCode);
+					packageDetailRequest.setBoxCode(packageCode);
 					String json=JSON.toJSONString(packageDetailRequest);
 					String resultSearch = com.wologic.util.SimpleClient.httpPost(searchUrl, json);
 					
 					JSONObject jsonSearch = new JSONObject(resultSearch);
 					if(jsonSearch.optString("code").toString().equals("200"))
 					{
-						PackageAllDetail packageDetail=JSON.parseObject(jsonSearch.optString("result"),PackageAllDetail.class);
+						List<PackageAllDetail> packageDetailList=JSON.parseArray(jsonSearch.optString("result"),PackageAllDetail.class);
+						storeCode=packageDetailList.get(0).getStoredCode();
 						Message msg = new Message();
 						msg.what = 1;
-						msg.obj = packageDetail;
+						msg.obj = packageDetailList;
+						handler.sendMessage(msg);
+					}
+					if(jsonSearch.optString("code").toString().equals("302"))
+					{
+						Message msg = new Message();
+						msg.what = 2;
+						msg.obj = jsonSearch.optString("message");
 						handler.sendMessage(msg);
 					}
 					else
@@ -153,13 +190,13 @@ public class PickerActivity extends Activity {
 
 	private void sumbit() {
 
-		String packageCode = etbarcode.getText().toString().trim();
+		final String packageCode = etbarcode.getText().toString().trim();
 		if (packageCode.equals("")) {
 			etbarcode.selectAll();
 			Toaster.toaster("请扫描包裹号!");
 			return;
 		}
-		String storeCode = etStore.getText().toString().trim();
+		final String storeCode = etStore.getText().toString().trim();
 
 		if (storeCode.equals("")) {
 			etStore.selectAll();
@@ -168,6 +205,95 @@ public class PickerActivity extends Activity {
 		}
 
 		// 获取门店信息
+		Thread mThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+
+					HttpClient client = com.wologic.util.SimpleClient
+							.getHttpClient();
+
+					String searchUrl = Constant.url
+							+ "/packageDetail/getPackageDetailByBoxCode";
+
+					PackageDetailRequest packageDetailRequest=new PackageDetailRequest();
+					packageDetailRequest.setBoxCode(packageCode);
+					String json=JSON.toJSONString(packageDetailRequest);
+					String resultSearch = com.wologic.util.SimpleClient.httpPost(searchUrl, json);
+					
+					JSONObject jsonSearch = new JSONObject(resultSearch);
+					if(jsonSearch.optString("code").toString().equals("200"))
+					{
+						List<PackageAllDetail> packageDetailList=JSON.parseArray(jsonSearch.optString("result"),PackageAllDetail.class);
+						if(!packageDetailList.get(0).getStoredCode().equals(storeCode))
+						{
+							Message msg = new Message();
+							msg.what = 3;
+							msg.obj = "包裹与当前门店不一致";
+							handler.sendMessage(msg);
+						}
+						else
+						{
+							   searchUrl = Constant.url
+										+ "/packageDetail/picknew";
+
+								PackageDetailRequest detailRequest=new PackageDetailRequest();
+								detailRequest.setBoxCode(packageCode);
+								
+								String json2=JSON.toJSONString(detailRequest);
+								String resultSearch2 = com.wologic.util.SimpleClient.httpPost(searchUrl, json2);
+								JSONObject jsonSearch2 = new JSONObject(resultSearch2);
+								if(jsonSearch2.optString("code").toString().equals("200"))
+								{
+									Message msg = new Message();
+									msg.what = 4;
+									msg.obj = "分拣完成";
+									handler.sendMessage(msg);
+								}
+								else if(jsonSearch2.optString("code").toString().equals("302"))
+								{
+									Message msg = new Message();
+									msg.what = 2;
+									msg.obj = jsonSearch.optString("message");
+									handler.sendMessage(msg);
+								}
+								else
+								{
+									Message msg = new Message();
+									msg.what = 3;
+									msg.obj = jsonSearch.optString("message");
+									handler.sendMessage(msg);
+								}
+								
+						}
+						
+						
+					}
+					if(jsonSearch.optString("code").toString().equals("302"))
+					{
+						Message msg = new Message();
+						msg.what = 2;
+						msg.obj = jsonSearch.optString("message");
+						handler.sendMessage(msg);
+					}
+					else
+					{
+						Message msg = new Message();
+						msg.what = 2;
+						msg.obj = jsonSearch.optString("message");
+						handler.sendMessage(msg);
+					}
+					
+				} catch (Exception e) {
+					System.out.print(e.getMessage());
+					Message msg = new Message();
+					msg.what = 2;
+					msg.obj = "网络异常,请检查单号是否存在";
+					handler.sendMessage(msg);
+				}
+			}
+		});
+		mThread.start();
 
 	}
 	
@@ -177,8 +303,8 @@ public class PickerActivity extends Activity {
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case 1:
-				PackageAllDetail detail=(PackageAllDetail)msg.obj;
-				tvTotalProcess.setText(detail.getTotalProcess());
+				List<PackageAllDetail> packageDetailList=(List<PackageAllDetail>)msg.obj;
+				/*tvTotalProcess.setText(detail.getTotalProcess());
 				tvProcess.setText(detail.getStoreProcess());
 				tvStoreName.setText(detail.getStoredName());
 				tvGoodsName.setText(detail.getGoodsName());
@@ -188,14 +314,24 @@ public class PickerActivity extends Activity {
 					guige=detail.getModelNum().toString()+detail.getGoodsUnit()+"/"+detail.getPhysicsUnit();
 				}
 				tvModel.setText(guige);
-				tvWeight.setText(detail.getWeight().toString());
+				tvWeight.setText(detail.getWeight().toString());*/
 				etStore.requestFocus();
 				break;
 			case 2:
 				etbarcode.selectAll();
+				etbarcode.requestFocus();
 				Toaster.toaster(msg.obj.toString());
 				break;
 			case 3:
+				etStore.selectAll();
+				etStore.requestFocus();
+				Toaster.toaster(msg.obj.toString());
+				break;
+			case 4:
+				etStore.setText("");
+				etbarcode.setText("");
+				etbarcode.requestFocus();
+				Toaster.toaster(msg.obj.toString());
 				break;
 			default:
 				break;

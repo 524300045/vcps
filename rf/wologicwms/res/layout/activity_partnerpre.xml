@@ -96,7 +96,7 @@
                 android:textSize="15sp" />
 
             <com.wologic.control.UnderLineEditText
-                android:id="@+id/etStore"
+                android:id="@+id/etBoxCode"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

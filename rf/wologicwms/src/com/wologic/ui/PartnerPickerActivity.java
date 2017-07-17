@@ -24,6 +24,7 @@ import android.view.View.OnKeyListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -53,11 +54,10 @@ public class PartnerPickerActivity extends Activity {
 	private ListView lvnoend;
 	
 	
-	private ListView lv;
-	   private SimpleAdapter adp;//定义适配器  
-	    private List<Map<String,Object>> mapList;//定义数据源  
+    private List<PackTaskDetail> packTaskDetailList ;
 
-	
+
+	private LinearLayout ll;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +70,11 @@ public class PartnerPickerActivity extends Activity {
 				finish();
 			}
 		});
-	
-		tvGoodsName = (TextView) findViewById(R.id.tvGoodsName);
+		ll= (LinearLayout)findViewById(R.id.ll);
+		//tvGoodsName = (TextView) findViewById(R.id.tvGoodsName);
 		tvmsg = (TextView) findViewById(R.id.tvmsg);
 		etPackageCode = (EditText) findViewById(R.id.etPackageCode);
-		tvGoodsName.setText("");
+		//tvGoodsName.setText("");
 		lvnoend = (ListView) findViewById(R.id.lvnoend);
 		//lv=(ListView)findViewById(R.id.listView2);  
 		initEvent();
@@ -87,43 +87,31 @@ public class PartnerPickerActivity extends Activity {
 	private void bindList()
 	{
 		
-		List<PackTaskDetail>  noendlist= new ArrayList<PackTaskDetail>();
-		PackTaskDetail detailone=new PackTaskDetail();
-		detailone.setId(1l);
-		detailone.setStoredCode("001");
-		detailone.setStoredName("北京");
-		detailone.setPlanNum(new BigDecimal(10L));
-		
-		PackTaskDetail detailtwo=new PackTaskDetail();
-		
-		detailtwo.setId(1l);
-		detailtwo.setStoredCode("002");
-		detailtwo.setStoredName("河南");
-		detailtwo.setPlanNum(new BigDecimal(20L));
-		
-		
-		noendlist.add(detailone);
-		noendlist.add(detailtwo);
 		
 		List<Map<String, Object>> 	mapnoendList = new ArrayList<Map<String, Object>>();
 
-		for (PackTaskDetail item : noendlist) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("id", item.getId());
-			map.put("storeCode", item.getStoredCode());
-			map.put("storeName", item.getStoredName());
-			map.put("num", item.getPlanNum());
-			mapnoendList.add(map);
-			
-		}
+		 if(null!=packTaskDetailList)
+		 {
+			 for (PackTaskDetail item : packTaskDetailList) {
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("id", item.getId());
+					map.put("storeCode", item.getStoredCode());
+					map.put("storeName", item.getStoredName());
+					map.put("num", item.getPlanNum());
+					map.put("outstockcode", item.getOutboundTaskCode());
+					map.put("taskcode", item.getPackTaskCode());
+					mapnoendList.add(map);
+				}
+		 }
+		
 		SpecialAdapter adp = new SpecialAdapter(this, mapnoendList,
 				R.layout.listitemstore, new String[] { "id",
-						"storeCode", "storeName", "num" }, new int[] {
+						"storeCode", "storeName", "num","outstockcode","taskcode" }, new int[] {
 						R.id.tvId, R.id.tvStoreCode, R.id.tvStoreName,
-						R.id.tvnum});
+						R.id.tvnum,R.id.tvoutstockcode,R.id.tvtaskCode});
 		lvnoend.setAdapter(adp);
 	
-		lvnoend.setAdapter(adp);
+
 		
 		
 	}
@@ -163,22 +151,21 @@ public class PartnerPickerActivity extends Activity {
 					long arg3) {
 
 				TextView tvid = (TextView) arg1.findViewById(R.id.tvId);
+				TextView tvStoreCode= (TextView) arg1.findViewById(R.id.tvStoreCode);
+				TextView tvStoreName= (TextView) arg1.findViewById(R.id.tvStoreName);
+				TextView tvOutStockCode= (TextView) arg1.findViewById(R.id.tvoutstockcode);
+				TextView tvTaskCode= (TextView) arg1.findViewById(R.id.tvtaskCode);
 				
 				Intent intent = new Intent(PartnerPickerActivity.this,
 						PartnerPreActivity.class);
-				intent.putExtra("packagecode", tvid.getText());// 传递入库单号
+				intent.putExtra("id", tvid.getText());// 传递入库单号
+				intent.putExtra("storeCode", tvStoreCode.getText());// 传递入库单号
+				intent.putExtra("storeName", tvStoreName.getText());// 传递入库单号
+				intent.putExtra("ousStockCode", tvOutStockCode.getText());// 传递入库单号
+				intent.putExtra("packTaskCode", tvTaskCode.getText());// 传递入库单号
 				
 				startActivity(intent);
-				
-				
-				//获取productno
-				/*TextView tvproductno = (TextView) arg1.findViewById(R.id.tvproductno);
-				TextView tvproductname = (TextView) arg0.findViewById(R.id.tbname);
-				String productno=tvproductno.getText().toString();
-				String productname=tvproductname.getText().toString();
-				//获取数量
-				TextView tvNum = (TextView) arg1.findViewById(R.id.tvworknm);
-				dialog(productno,tvNum.getText().toString(),productname);*/
+
 			}
 		});
 	
@@ -207,7 +194,7 @@ public class PartnerPickerActivity extends Activity {
 					JSONObject jsonSearch = new JSONObject(resultSearch);
 					if(jsonSearch.optString("code").toString().equals("200"))
 					{
-						if(null==jsonSearch.optString("result"))
+						if(null==jsonSearch.optString("result")||"null".equals(jsonSearch.opt("result").toString()))
 						{
 							//判断预包装表中是否存在
 							
@@ -252,7 +239,7 @@ public class PartnerPickerActivity extends Activity {
 										PackTaskDetailRequest packTaskDetailRequest=new PackTaskDetailRequest();
 										packTaskDetailRequest.setSkuCode(skuCode);
 										
-										String json4=JSON.toJSONString(preprocessInfoRequest);
+										String json4=JSON.toJSONString(packTaskDetailRequest);
 										String resultSearch4 = com.wologic.util.SimpleClient.httpPost(searchUrl, json4);
 										JSONObject jsonSearch4 = new JSONObject(resultSearch4);
 										if(jsonSearch4.optString("code").toString().equals("200"))
@@ -266,11 +253,14 @@ public class PartnerPickerActivity extends Activity {
 											}
 											else
 											{
-												List<PackTaskDetail> packTaskDetailList=JSON.parseArray(jsonSearch4.opt("result").toString(), PackTaskDetail.class);
+												 packTaskDetailList=JSON.parseArray(jsonSearch4.opt("result").toString(), PackTaskDetail.class);
 												 if(packTaskDetailList!=null)
 												 {
 													  //绑定门店列表
-													 
+														Message msg = new Message();
+														msg.what =4;
+														msg.obj ="";
+														handler.sendMessage(msg);
 												 }
 											}
 										}
@@ -360,6 +350,10 @@ public class PartnerPickerActivity extends Activity {
 			case 3:
 				tvmsg.setVisibility(View.VISIBLE);
 				tvmsg.setText(msg.obj.toString());
+				break;
+			case 4:
+				ll.setVisibility(View.VISIBLE);
+				bindList();
 				break;
 			default:
 				break;

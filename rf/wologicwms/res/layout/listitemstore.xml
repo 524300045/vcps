@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingBottom="5dp"
+    android:paddingBottom="10dp"
     android:paddingTop="5dp" >
 
     <LinearLayout
@@ -23,12 +23,31 @@
             android:textColor="@color/black"
             android:textSize="13sp" />
         
+          <TextView
+            android:id="@+id/tvoutstockcode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+          
+            <TextView
+            android:id="@+id/tvtaskCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
         
         <TextView
             android:id="@+id/tvStoreCode"
              android:layout_width="80dp"
             android:layout_height="wrap_content"
-        
+         android:visibility="gone"
             android:gravity="left"
             android:text=""
             android:textColor="@color/black"
