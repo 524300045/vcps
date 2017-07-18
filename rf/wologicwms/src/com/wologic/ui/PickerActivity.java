@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.wologic.R;
+import com.wologic.application.MyApplication;
 import com.wologic.domainnew.PackageAllDetail;
 import com.wologic.request.PackageDetailRequest;
 import com.wologic.util.Constant;
@@ -49,13 +50,9 @@ public class PickerActivity extends Activity {
 				finish();
 			}
 		});
-		tvTotalProcess = (TextView) findViewById(R.id.tvTotalProcess);
+	
 		tvProcess = (TextView) findViewById(R.id.tvProcess);
-		tvStoreName = (TextView) findViewById(R.id.tvStoreName);
-		tvGoodsName = (TextView) findViewById(R.id.tvGoodsName);
-		tvModel = (TextView) findViewById(R.id.tvModel);
-		tvWeight = (TextView) findViewById(R.id.tvWeight);
-		
+	
 		tvmsg = (TextView) findViewById(R.id.tvmsg);
 		etbarcode = (EditText) findViewById(R.id.etbarcode);
 		etStore = (EditText) findViewById(R.id.etStore);
@@ -64,16 +61,13 @@ public class PickerActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-
+				
+				sumbit();
 			}
 		});
-		tvTotalProcess.setText("");
+
 		tvProcess.setText("");
-		tvStoreName.setText("");
-		tvGoodsName.setText("");
-		tvModel.setText("");
-		tvWeight.setText("");
+		
 		
 		initEvent();
 		etbarcode.requestFocus();
@@ -95,6 +89,7 @@ public class PickerActivity extends Activity {
 							Toaster.toaster("ÇëÉ¨Ãè°ü¹üºÅ!");
 							return true;
 						}
+						tvProcess.setText("");
 						getPackageDetail(packageCode);
 						break;
 					case KeyEvent.ACTION_DOWN:
@@ -161,7 +156,7 @@ public class PickerActivity extends Activity {
 						msg.obj = packageDetailList;
 						handler.sendMessage(msg);
 					}
-					if(jsonSearch.optString("code").toString().equals("302"))
+					else if(jsonSearch.optString("code").toString().equals("302"))
 					{
 						Message msg = new Message();
 						msg.what = 2;
@@ -240,6 +235,7 @@ public class PickerActivity extends Activity {
 								PackageDetailRequest detailRequest=new PackageDetailRequest();
 								detailRequest.setBoxCode(packageCode);
 								
+								detailRequest.setCreateUser(MyApplication.getAppContext().getUsername());
 								String json2=JSON.toJSONString(detailRequest);
 								String resultSearch2 = com.wologic.util.SimpleClient.httpPost(searchUrl, json2);
 								JSONObject jsonSearch2 = new JSONObject(resultSearch2);
@@ -269,7 +265,7 @@ public class PickerActivity extends Activity {
 						
 						
 					}
-					if(jsonSearch.optString("code").toString().equals("302"))
+					else	if(jsonSearch.optString("code").toString().equals("302"))
 					{
 						Message msg = new Message();
 						msg.what = 2;
@@ -304,18 +300,23 @@ public class PickerActivity extends Activity {
 			switch (msg.what) {
 			case 1:
 				List<PackageAllDetail> packageDetailList=(List<PackageAllDetail>)msg.obj;
-				/*tvTotalProcess.setText(detail.getTotalProcess());
-				tvProcess.setText(detail.getStoreProcess());
-				tvStoreName.setText(detail.getStoredName());
-				tvGoodsName.setText(detail.getGoodsName());
-				String guige="";
-				if(detail.getModelNum()!=null)
+				int totalNum=0;
+				int finishNum=0;
+				
+				if(packageDetailList!=null)
 				{
-					guige=detail.getModelNum().toString()+detail.getGoodsUnit()+"/"+detail.getPhysicsUnit();
+					totalNum=packageDetailList.size();
+					for(PackageAllDetail item:packageDetailList)
+					{
+						if(item.getStatus().equals(10))
+						{
+							finishNum+=1;
+						}
+					}
 				}
-				tvModel.setText(guige);
-				tvWeight.setText(detail.getWeight().toString());*/
+				tvProcess.setText(finishNum+"/"+totalNum);
 				etStore.requestFocus();
+				etStore.selectAll();
 				break;
 			case 2:
 				etbarcode.selectAll();
