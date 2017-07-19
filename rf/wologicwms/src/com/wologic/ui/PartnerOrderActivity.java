@@ -42,7 +42,7 @@ public class PartnerOrderActivity extends Activity {
 	private String packagecode;
 
 	private Long packageId;
-	
+
 	private String storeCode;
 
 	@Override
@@ -53,8 +53,8 @@ public class PartnerOrderActivity extends Activity {
 		Intent intent = getIntent();
 		if (intent != null) {
 			packagecode = intent.getStringExtra("packagecode");
-			packageId = Long.valueOf(intent.getStringExtra("packageId"));
-			storeCode=intent.getStringExtra("storeCode");
+			packageId = intent.getLongExtra("packageId", 0);
+			storeCode = intent.getStringExtra("storeCode");
 		}
 
 		tbBack = (TextView) findViewById(R.id.tvback);
@@ -179,8 +179,7 @@ public class PartnerOrderActivity extends Activity {
 					HttpClient client = com.wologic.util.SimpleClient
 							.getHttpClient();
 
-					String searchUrl = Constant.url
-							+ "/boxInfo/getBoxInfoCode";
+					String searchUrl = Constant.url + "/boxInfo/getBoxInfoCode";
 
 					BoxInfoRequest boxInfoRequest = new BoxInfoRequest();
 					boxInfoRequest.setBoxCode(boxCode);
@@ -203,52 +202,49 @@ public class PartnerOrderActivity extends Activity {
 							BoxInfo boxInfo = JSON.parseObject(
 									jsonSearch.optString("result"),
 									BoxInfo.class);
-							if(!storeCode.equals(boxInfo.getBoxCode()))
-							{
+							if (!storeCode.equals(boxInfo.getStoredCode())) {
 								Message msg = new Message();
 								msg.what = 2;
 								msg.obj = "箱号不属于当前门店";
 								handler.sendMessage(msg);
-							}
-							 else {
+							} else {
 								searchUrl = Constant.url
 										+ "/packageDetail/partnerOrder";
+								
 								PackageDetailRequest packageDetailRequest = new PackageDetailRequest();
-								packageDetailRequest.setBoxCode(boxCode);
-								packageDetailRequest
-										.setPackageCode(packagecode);
-								packageDetailRequest
-										.setUpdateUser(MyApplication
-												.getAppContext().getUsername());
+								packageDetailRequest.setPackageCode(packagecode);
 								packageDetailRequest.setId(packageId);
+								packageDetailRequest.setUpdateUser(MyApplication.getAppContext().getUsername());
+								packageDetailRequest.setBoxCode(boxCode);
 								
-								String json2= JSON.toJSONString(packageDetailRequest);
-								
+
+								String json2 = JSON
+										.toJSONString(packageDetailRequest);
+
 								String resultSearch2 = com.wologic.util.SimpleClient
 										.httpPost(searchUrl, json2);
-								JSONObject jsonSearch2 = new JSONObject(resultSearch2);
-								if (jsonSearch2.optString("code").toString().equals("200")) {
-									
+								JSONObject jsonSearch2 = new JSONObject(
+										resultSearch2);
+								if (jsonSearch2.optString("code").toString()
+										.equals("200")) {
+
 									Message msg = new Message();
 									msg.what = 3;
-									msg.obj ="扫描成功";
+									msg.obj = "扫描成功";
 									handler.sendMessage(msg);
-								}
-								else
-								{
+								} else {
 									Message msg = new Message();
 									msg.what = 2;
 									msg.obj = jsonSearch.optString("message");
 									handler.sendMessage(msg);
 								}
-								
-								
+
 							}
 
 						}
 
 					} else {
-						
+
 					}
 
 				} catch (Exception e) {
@@ -263,9 +259,6 @@ public class PartnerOrderActivity extends Activity {
 		mThread.start();
 	}
 
-	private void sumbit() {
-
-	}
 
 	Handler handler = new Handler() {
 		@Override
@@ -293,7 +286,7 @@ public class PartnerOrderActivity extends Activity {
 				Toaster.toaster(msg.obj.toString());
 				break;
 			case 3:
-				//提交成功
+				// 提交成功
 				Toaster.toaster(msg.obj.toString());
 				finish();
 				break;
