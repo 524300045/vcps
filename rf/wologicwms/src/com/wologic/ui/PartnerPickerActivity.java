@@ -163,7 +163,7 @@ public class PartnerPickerActivity extends Activity {
 				intent.putExtra("storeName", tvStoreName.getText());// 传递入库单号
 				intent.putExtra("ousStockCode", tvOutStockCode.getText());// 传递入库单号
 				intent.putExtra("packTaskCode", tvTaskCode.getText());// 传递入库单号
-				
+				intent.putExtra("lastPackageCode", etPackageCode.getText().toString());
 				startActivity(intent);
 
 			}
@@ -361,6 +361,20 @@ public class PartnerPickerActivity extends Activity {
 		}
 	};
 
+	
+	//接受页面的返回值
+	  @Override//requestCode请求标识   //resultCode 返回标识
+	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	        /*if(requestCode == 0) {
+	            if(resultCode == Activity.RESULT_OK) {
+	               String content=data.getStringExtra("returnmsg");
+	            	tvReturn.setText("接受返回内容:"+content);
+	            }
+	        }*/
+		  etPackageCode.selectAll();
+		  etPackageCode.requestFocus();
+		  
+	  }
 
 	
 	public class SpecialAdapter extends SimpleAdapter{  

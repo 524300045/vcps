@@ -20,9 +20,11 @@ import com.alibaba.fastjson.JSON;
 import com.wologic.R;
 import com.wologic.application.MyApplication;
 import com.wologic.domainnew.BoxInfo;
+import com.wologic.domainnew.PackTaskDetail;
 import com.wologic.domainnew.PackageAllDetail;
 import com.wologic.domainnew.PreprocessInfo;
 import com.wologic.request.BoxInfoRequest;
+import com.wologic.request.PackTaskDetailRequest;
 import com.wologic.request.PackageDetailRequest;
 import com.wologic.request.PreprocessInfoRequest;
 import com.wologic.util.Constant;
@@ -42,6 +44,8 @@ public class PartnerPreActivity extends Activity {
 	private String storeCode, storeName,ousStockCode,packTaskCode;
 
 	private Long taskDetailId;
+	
+	private String lastPackageCode;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +61,12 @@ public class PartnerPreActivity extends Activity {
 
 		Intent intent = getIntent();
 		if (intent != null) {
-			storeCode = intent.getStringExtra("storeCode");
-			taskDetailId = Long.valueOf(intent.getStringExtra("id"));
+			storeCode = intent.getStringExtra("storeCode");//门店编号
+			taskDetailId = Long.valueOf(intent.getStringExtra("id"));//包装任务明细ID
 			storeName = intent.getStringExtra("storeName");
 			ousStockCode=intent.getStringExtra("ousStockCode");
 			packTaskCode=intent.getStringExtra("packTaskCode");
+			lastPackageCode=intent.getStringExtra("lastPackageCode");
 		}
 
 		tvProcess = (TextView) findViewById(R.id.tvProcess);
@@ -74,15 +79,74 @@ public class PartnerPreActivity extends Activity {
 		etbarcode = (EditText) findViewById(R.id.etbarcode);
 		etBoxCode = (EditText) findViewById(R.id.etBoxCode);
 
+		tvStoreName.setText(storeName);
+		
 		tvProcess.setText("");
-		tvStoreName.setText("");
+		
 		tvGoodsName.setText("");
 		tvModel.setText("");
 		tvWeight.setText("");
 
 		initEvent();
-		etbarcode.requestFocus();
+		etBoxCode.requestFocus();
+		getProcessInfo(lastPackageCode);
+	}
+	
+	
+	private void getProcessInfo(final String lastPackageCode)
+	{
+		Thread mThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
 
+				
+							
+							//查询预包装信息
+					    String searchUrl = Constant.url
+									+ "/preprocessInfo/getPreprocessInfoByCode";
+							
+							PreprocessInfoRequest preprocessInfoRequest=new PreprocessInfoRequest();
+							preprocessInfoRequest.setPreprocessCode(lastPackageCode);
+							String json3=JSON.toJSONString(preprocessInfoRequest);
+							String resultSearch3 = com.wologic.util.SimpleClient.httpPost(searchUrl, json3);
+							JSONObject jsonSearch3 = new JSONObject(resultSearch3);
+							if(jsonSearch3.optString("code").toString().equals("200"))
+							{
+								if(null==jsonSearch3.opt("result")||"null".equals(jsonSearch3.opt("result").toString()))
+								{
+									Message msg = new Message();
+									msg.what =2;
+									msg.obj ="查询不到包裹信息" +
+											"";
+									handler.sendMessage(msg);
+								}
+								else
+								{
+									
+									PreprocessInfo preprocessInfo=JSON.parseObject(jsonSearch3.optString("result"),PreprocessInfo.class);
+									Message msg = new Message();
+									msg.what =5;
+									msg.obj =preprocessInfo;
+
+									handler.sendMessage(msg);
+								}
+							}
+						
+					
+					
+				} catch (Exception e) {
+					System.out.print(e.getMessage());
+					Message msg = new Message();
+					msg.what = 3;
+					msg.obj =e.getMessage();
+					handler.sendMessage(msg);
+					
+				}
+			}
+		});
+		mThread.start();
+		
 	}
 
 	private void initEvent() {
@@ -235,7 +299,7 @@ public class PartnerPreActivity extends Activity {
 							BoxInfo boxInfo = JSON.parseObject(
 									jsonSearch.optString("result"),
 									BoxInfo.class);
-							if (!storeCode.equals(boxInfo.getBoxCode())) {
+							if (!storeCode.equals(boxInfo.getStoredCode())) {
 								Message msg = new Message();
 								msg.what = 2;
 								msg.obj = "箱号不属于当前门店";
@@ -244,15 +308,16 @@ public class PartnerPreActivity extends Activity {
 
 								// 查询包裹信息
 								searchUrl = Constant.url
-										+ "/boxInfo/getPreprocessInfoByCode";
+										+ "/preprocessInfo/getPreprocessInfoByCode";
 								PreprocessInfoRequest preprocessInfoRequest = new PreprocessInfoRequest();
 								preprocessInfoRequest
 										.setPreprocessCode(packageCode);
 								String json2 = JSON
-										.toJSONString(boxInfoRequest);
+										.toJSONString(preprocessInfoRequest);
 								String resultSearch2 = com.wologic.util.SimpleClient
 										.httpPost(searchUrl, json2);
 
+								
 								JSONObject jsonSearch2 = new JSONObject(
 										resultSearch2);
 								if (jsonSearch2.optString("code").toString()
@@ -388,7 +453,13 @@ public class PartnerPreActivity extends Activity {
 				etbarcode.requestFocus();
 				Toaster.toaster(msg.obj.toString());
 				break;
-				
+			case 5:
+				PreprocessInfo preprocessInfo=(PreprocessInfo)msg.obj;
+				tvProcess.setText("");
+				tvGoodsName.setText(preprocessInfo.getGoodsName());
+				tvModel.setText(preprocessInfo.getModelNum().toString());
+				tvWeight.setText(preprocessInfo.getPackWeight().toString());
+				break;
 			default:
 				break;
 			}
