@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,6 +24,7 @@ import com.wologic.domainnew.BoxInfo;
 import com.wologic.domainnew.PackageAllDetail;
 import com.wologic.domainnew.PreprocessInfo;
 import com.wologic.request.BoxInfoRequest;
+import com.wologic.request.OutBoundRequest;
 import com.wologic.request.PackageDetailRequest;
 import com.wologic.request.PreprocessInfoRequest;
 import com.wologic.util.Constant;
@@ -44,6 +46,8 @@ public class PartnerOrderActivity extends Activity {
 	private Long packageId;
 
 	private String storeCode;
+	
+	private MediaPlayer mediaPlayer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,11 @@ public class PartnerOrderActivity extends Activity {
 				finish();
 			}
 		});
+		
+		mediaPlayer = MediaPlayer.create(
+				PartnerOrderActivity.this, R.raw.error);
+		
+		
 		tvTotalProcess = (TextView) findViewById(R.id.tvTotalProcess);
 		tvProcess = (TextView) findViewById(R.id.tvProcess);
 		tvStoreName = (TextView) findViewById(R.id.tvStoreName);
@@ -93,7 +102,47 @@ public class PartnerOrderActivity extends Activity {
 		initEvent();
 		etBoxCode.requestFocus();
 		getPackageDetail(packagecode);
+		loadProcess(storeCode);
+	}
+	
+	private void loadProcess(final String scode)
+	{
+		Thread mThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
 
+					HttpClient client = com.wologic.util.SimpleClient
+							.getHttpClient();
+
+				  String	searchUrl = Constant.url
+							+ "/outBoundDetail/getFinishInfo";
+					
+					OutBoundRequest outBoundRequest=new OutBoundRequest();
+					outBoundRequest.setStoredCode(scode);
+					String json2=JSON.toJSONString(outBoundRequest);
+					String resultSearch2 = com.wologic.util.SimpleClient.httpPost(searchUrl, json2);
+					
+					JSONObject jsonSearch2 = new JSONObject(resultSearch2);
+					if(jsonSearch2.optString("code").toString().equals("200"))
+					{
+						Message msg5 = new Message();
+						msg5.what =5;
+						msg5.obj = jsonSearch2.optString("result");
+						handler.sendMessage(msg5);
+					}
+
+				} catch (Exception e) {
+					System.out.print(e.getMessage());
+					Message msg = new Message();
+					msg.what = 2;
+					msg.obj = "Õ¯¬Á“Ï≥£,«ÎºÏ≤ÈÕ¯¬Á¡¨Ω”";
+					handler.sendMessage(msg);
+				}
+			}
+		});
+		mThread.start();
+		
 	}
 
 	private void initEvent() {
@@ -105,10 +154,15 @@ public class PartnerOrderActivity extends Activity {
 					switch (event.getAction()) {
 					case KeyEvent.ACTION_UP:
 						tvmsg.setText("");
+						
 						String code = etBoxCode.getText().toString().trim();
 						if (code.equals("")) {
 							etBoxCode.selectAll();
 							Toaster.toaster("«Î…®√Ëœ‰∫≈!");
+							mediaPlayer.setVolume(1.0f, 1.0f);
+							mediaPlayer.start();
+							tvmsg.setVisibility(View.VISIBLE);
+							tvmsg.setText("«Î…®√Ëœ‰∫≈!");
 							return true;
 						}
 						getPreProcessDetail(code);
@@ -162,7 +216,7 @@ public class PartnerOrderActivity extends Activity {
 					System.out.print(e.getMessage());
 					Message msg = new Message();
 					msg.what = 2;
-					msg.obj = "Õ¯¬Á“Ï≥£,«ÎºÏ≤Èµ•∫≈ «∑Ò¥Ê‘⁄";
+					msg.obj = "Õ¯¬Á“Ï≥£,«ÎºÏ≤ÈÕ¯¬Á¡¨Ω”";
 					handler.sendMessage(msg);
 				}
 			}
@@ -282,13 +336,22 @@ public class PartnerOrderActivity extends Activity {
 
 				break;
 			case 2:
-
+				
+				mediaPlayer.setVolume(1.0f, 1.0f);
+				mediaPlayer.start();
+				tvmsg.setVisibility(View.VISIBLE);
+				tvmsg.setText(msg.obj.toString());
 				Toaster.toaster(msg.obj.toString());
+				etBoxCode.selectAll();
+				etBoxCode.requestFocus();
 				break;
 			case 3:
 				// Ã·Ωª≥…π¶
 				Toaster.toaster(msg.obj.toString());
 				finish();
+				break;
+			case 5:
+				tvProcess.setText(msg.obj.toString());
 				break;
 			default:
 				break;
@@ -301,5 +364,13 @@ public class PartnerOrderActivity extends Activity {
 		super.onStart();
 
 	}
+	
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mediaPlayer != null) {
+			mediaPlayer.stop();
+			mediaPlayer.release();
+		}
+	};
 
 }

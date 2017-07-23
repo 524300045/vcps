@@ -6,6 +6,7 @@ import org.apache.http.client.HttpClient;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,6 +22,7 @@ import com.alibaba.fastjson.JSON;
 import com.wologic.R;
 import com.wologic.application.MyApplication;
 import com.wologic.domainnew.PackageAllDetail;
+import com.wologic.request.OutBoundRequest;
 import com.wologic.request.PackageDetailRequest;
 import com.wologic.util.Constant;
 import com.wologic.util.Toaster;
@@ -35,10 +37,11 @@ public class PickerActivity extends Activity {
 
 	private Button btnSure;
 
-	private String storeCode;
-	
-	private TextView tvmsg,tvProcess,tvStoreName,tvGoodsName,tvModel,tvWeight,tvTotalProcess;
+	private TextView tvmsg,tvProcess,tvStoreName;
 
+	private MediaPlayer mediaPlayer;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,7 +55,7 @@ public class PickerActivity extends Activity {
 		});
 	
 		tvProcess = (TextView) findViewById(R.id.tvProcess);
-	
+		tvStoreName=(TextView) findViewById(R.id.tvStoreName);
 		tvmsg = (TextView) findViewById(R.id.tvmsg);
 		etbarcode = (EditText) findViewById(R.id.etbarcode);
 		etStore = (EditText) findViewById(R.id.etStore);
@@ -66,8 +69,12 @@ public class PickerActivity extends Activity {
 			}
 		});
 
-		tvProcess.setText("");
 		
+		mediaPlayer = MediaPlayer.create(
+				PickerActivity.this, R.raw.error);
+		
+		tvProcess.setText("");
+		tvStoreName.setText("");
 		
 		initEvent();
 		etbarcode.requestFocus();
@@ -82,11 +89,19 @@ public class PickerActivity extends Activity {
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {
 					switch (event.getAction()) {
 					case KeyEvent.ACTION_UP:
+						tvmsg.setText("");
+						tvmsg.setVisibility(View.GONE);
 						String packageCode = etbarcode.getText().toString()
 								.trim();
 						if (packageCode.equals("")) {
 							etbarcode.selectAll();
 							Toaster.toaster("«Î…®√Ë∞¸π¸∫≈!");
+							tvmsg.setText("«Î…®√Ë∞¸π¸∫≈!");
+							tvmsg.setVisibility(View.VISIBLE);
+							
+							mediaPlayer.setVolume(1.0f, 1.0f);
+							mediaPlayer.start();
+							
 							return true;
 						}
 						tvProcess.setText("");
@@ -108,11 +123,17 @@ public class PickerActivity extends Activity {
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {
 					switch (event.getAction()) {
 					case KeyEvent.ACTION_UP:
+						tvmsg.setText("");
+						tvmsg.setVisibility(View.GONE);
 						String storeCode = etStore.getText().toString()
 								.trim();
 						if (storeCode.equals("")) {
 							etbarcode.selectAll();
 							Toaster.toaster("«Î…®√Ë√≈µÍ∫≈!");
+							tvmsg.setText("«Î…®√Ë√≈µÍ∫≈!");
+							tvmsg.setVisibility(View.VISIBLE);
+							mediaPlayer.setVolume(1.0f, 1.0f);
+							mediaPlayer.start();
 							return true;
 						}
 						sumbit() ;
@@ -150,11 +171,29 @@ public class PickerActivity extends Activity {
 					if(jsonSearch.optString("code").toString().equals("200"))
 					{
 						List<PackageAllDetail> packageDetailList=JSON.parseArray(jsonSearch.optString("result"),PackageAllDetail.class);
-						storeCode=packageDetailList.get(0).getStoredCode();
+						//storeCode=packageDetailList.get(0).getStoredCode();
 						Message msg = new Message();
 						msg.what = 1;
 						msg.obj = packageDetailList;
 						handler.sendMessage(msg);
+						
+						searchUrl = Constant.url
+								+ "/outBoundDetail/getFinishInfo";
+						
+						OutBoundRequest outBoundRequest=new OutBoundRequest();
+						outBoundRequest.setStoredCode(packageDetailList.get(0).getOutboundTaskCode());
+						String json2=JSON.toJSONString(outBoundRequest);
+						String resultSearch2 = com.wologic.util.SimpleClient.httpPost(searchUrl, json2);
+						
+						JSONObject jsonSearch2 = new JSONObject(resultSearch2);
+						if(jsonSearch2.optString("code").toString().equals("200"))
+						{
+							Message msg5 = new Message();
+							msg5.what =5;
+							msg5.obj = jsonSearch2.optString("result");
+							handler.sendMessage(msg5);
+						}
+						
 					}
 					else if(jsonSearch.optString("code").toString().equals("302"))
 					{
@@ -175,7 +214,7 @@ public class PickerActivity extends Activity {
 					System.out.print(e.getMessage());
 					Message msg = new Message();
 					msg.what = 2;
-					msg.obj = "Õ¯¬Á“Ï≥£,«ÎºÏ≤Èµ•∫≈ «∑Ò¥Ê‘⁄";
+					msg.obj = "Õ¯¬Á“Ï≥£,«ÎºÏ≤ÈÕ¯¬Á¡¨Ω”";
 					handler.sendMessage(msg);
 				}
 			}
@@ -184,11 +223,18 @@ public class PickerActivity extends Activity {
 	}
 
 	private void sumbit() {
+		
+		tvmsg.setText("");
+		tvmsg.setVisibility(View.GONE);
 
 		final String packageCode = etbarcode.getText().toString().trim();
 		if (packageCode.equals("")) {
 			etbarcode.selectAll();
 			Toaster.toaster("«Î…®√Ë∞¸π¸∫≈!");
+			tvmsg.setText("«Î…®√Ë∞¸π¸∫≈!");
+			tvmsg.setVisibility(View.VISIBLE);
+			mediaPlayer.setVolume(1.0f, 1.0f);
+			mediaPlayer.start();
 			return;
 		}
 		final String storeCode = etStore.getText().toString().trim();
@@ -196,6 +242,10 @@ public class PickerActivity extends Activity {
 		if (storeCode.equals("")) {
 			etStore.selectAll();
 			Toaster.toaster("«Î…®√Ë√≈µÍ∫≈!");
+			tvmsg.setText("«Î…®√Ë√≈µÍ∫≈!");
+			tvmsg.setVisibility(View.VISIBLE);
+			mediaPlayer.setVolume(1.0f, 1.0f);
+			mediaPlayer.start();
 			return;
 		}
 
@@ -250,14 +300,14 @@ public class PickerActivity extends Activity {
 								{
 									Message msg = new Message();
 									msg.what = 2;
-									msg.obj = jsonSearch.optString("message");
+									msg.obj = jsonSearch2.optString("message");
 									handler.sendMessage(msg);
 								}
 								else
 								{
 									Message msg = new Message();
 									msg.what = 3;
-									msg.obj = jsonSearch.optString("message");
+									msg.obj = jsonSearch2.optString("message");
 									handler.sendMessage(msg);
 								}
 								
@@ -284,7 +334,7 @@ public class PickerActivity extends Activity {
 					System.out.print(e.getMessage());
 					Message msg = new Message();
 					msg.what = 2;
-					msg.obj = "Õ¯¬Á“Ï≥£,«ÎºÏ≤Èµ•∫≈ «∑Ò¥Ê‘⁄";
+					msg.obj = "Õ¯¬Á“Ï≥£,«ÎºÏ≤ÈÕ¯¬Á¡¨Ω”";
 					handler.sendMessage(msg);
 				}
 			}
@@ -313,6 +363,7 @@ public class PickerActivity extends Activity {
 							finishNum+=1;
 						}
 					}
+					tvStoreName.setText(packageDetailList.get(0).getStoredName());
 				}
 				tvProcess.setText(finishNum+"/"+totalNum);
 				etStore.requestFocus();
@@ -322,17 +373,32 @@ public class PickerActivity extends Activity {
 				etbarcode.selectAll();
 				etbarcode.requestFocus();
 				Toaster.toaster(msg.obj.toString());
+				tvmsg.setText(msg.obj.toString());
+				tvmsg.setVisibility(View.VISIBLE);
+				mediaPlayer.setVolume(1.0f, 1.0f);
+				mediaPlayer.start();
 				break;
 			case 3:
 				etStore.selectAll();
 				etStore.requestFocus();
 				Toaster.toaster(msg.obj.toString());
+				tvmsg.setText(msg.obj.toString());
+				tvmsg.setVisibility(View.VISIBLE);
+				mediaPlayer.setVolume(1.0f, 1.0f);
+				mediaPlayer.start();
 				break;
 			case 4:
 				etStore.setText("");
 				etbarcode.setText("");
 				etbarcode.requestFocus();
 				Toaster.toaster(msg.obj.toString());
+				tvmsg.setText(msg.obj.toString());
+				tvmsg.setVisibility(View.VISIBLE);
+				mediaPlayer.setVolume(1.0f, 1.0f);
+				mediaPlayer.start();
+				break;
+			case 5:
+				tvProcess.setText(msg.obj.toString());
 				break;
 			default:
 				break;
@@ -340,6 +406,14 @@ public class PickerActivity extends Activity {
 		}
 	};
 
+	
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mediaPlayer != null) {
+			mediaPlayer.stop();
+			mediaPlayer.release();
+		}
+	};
 	
 
 	@Override

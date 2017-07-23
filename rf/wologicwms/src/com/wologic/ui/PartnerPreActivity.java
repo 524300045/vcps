@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -46,6 +47,10 @@ public class PartnerPreActivity extends Activity {
 	private Long taskDetailId;
 	
 	private String lastPackageCode;
+	
+	private MediaPlayer mediaPlayer;
+	
+	private String processInfo="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +60,14 @@ public class PartnerPreActivity extends Activity {
 		tbBack.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				finish();
+				  Intent  data= new Intent();   
+	              data.putExtra("returnmsg","");  
+	              setResult(Activity.RESULT_OK,data);  
+	              finish();  
 			}
 		});
-
+		mediaPlayer = MediaPlayer.create(
+				PartnerPreActivity.this, R.raw.error);
 		Intent intent = getIntent();
 		if (intent != null) {
 			storeCode = intent.getStringExtra("storeCode");//门店编号
@@ -67,6 +76,7 @@ public class PartnerPreActivity extends Activity {
 			ousStockCode=intent.getStringExtra("ousStockCode");
 			packTaskCode=intent.getStringExtra("packTaskCode");
 			lastPackageCode=intent.getStringExtra("lastPackageCode");
+			processInfo=intent.getStringExtra("processInfo");
 		}
 
 		tvProcess = (TextView) findViewById(R.id.tvProcess);
@@ -81,7 +91,7 @@ public class PartnerPreActivity extends Activity {
 
 		tvStoreName.setText(storeName);
 		
-		tvProcess.setText("");
+		tvProcess.setText(processInfo);
 		
 		tvGoodsName.setText("");
 		tvModel.setText("");
@@ -158,11 +168,22 @@ public class PartnerPreActivity extends Activity {
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {
 					switch (event.getAction()) {
 					case KeyEvent.ACTION_UP:
-						String packageCode = etbarcode.getText().toString()
+						
+						tvmsg.setVisibility(View.GONE);
+						tvmsg.setText("");
+						
+						String boxCode = etBoxCode.getText().toString()
 								.trim();
-						if (packageCode.equals("")) {
-							etbarcode.selectAll();
+						if (boxCode.equals("")) {
+							etBoxCode.selectAll();
 							Toaster.toaster("请扫描箱号!");
+							
+							mediaPlayer.setVolume(1.0f, 1.0f);
+							mediaPlayer.start();
+							tvmsg.setVisibility(View.VISIBLE);
+							tvmsg.setText("请扫描箱号");
+							
+							
 							return true;
 						}
 						etbarcode.requestFocus();
@@ -183,13 +204,27 @@ public class PartnerPreActivity extends Activity {
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {
 					switch (event.getAction()) {
 					case KeyEvent.ACTION_UP:
+						
+						tvmsg.setVisibility(View.GONE);
+						tvmsg.setText("");
+						
 						String packageCode = etbarcode.getText().toString()
 								.trim();
 						if (packageCode.equals("")) {
 							etbarcode.selectAll();
 							Toaster.toaster("请扫描包裹号!");
+							
+							mediaPlayer.setVolume(1.0f, 1.0f);
+							mediaPlayer.start();
+							tvmsg.setVisibility(View.VISIBLE);
+							tvmsg.setText("请扫描包裹号!");
+							
 							return true;
 						}
+						
+						
+						
+						
 						sumbit();
 						break;
 					case KeyEvent.ACTION_DOWN:
@@ -241,7 +276,7 @@ public class PartnerPreActivity extends Activity {
 					System.out.print(e.getMessage());
 					Message msg = new Message();
 					msg.what = 2;
-					msg.obj = "网络异常,请检查单号是否存在";
+					msg.obj = "网络异常,请检查网络连接";
 					handler.sendMessage(msg);
 				}
 			}
@@ -369,11 +404,25 @@ public class PartnerPreActivity extends Activity {
 											if (jsonSearch3.optString("code").toString()
 													.equals("200")) 
 											{
+												if(null!=jsonSearch3.optString("result"))
+												{
+													processInfo=jsonSearch3.optString("result");
+												}
+												
 												
 												Message msg = new Message();
 												msg.what = 4;
-												msg.obj = jsonSearch3.optString("message");
+												msg.obj = "装箱成功";
 												handler.sendMessage(msg);
+											}
+											if (jsonSearch3.optString("code").toString()
+													.equals("100")) 
+											{
+												Message msg = new Message();
+												msg.what = 6;
+												msg.obj = "装箱包数已达到门店数量";
+												handler.sendMessage(msg);
+												
 											}
 											else if(jsonSearch3.optString("code").toString()
 													.equals("301"))
@@ -418,7 +467,7 @@ public class PartnerPreActivity extends Activity {
 					System.out.print(e.getMessage());
 					Message msg = new Message();
 					msg.what = 2;
-					msg.obj = "网络异常,请检查单号是否存在";
+					msg.obj = "网络异常,请检查网络连接";
 					handler.sendMessage(msg);
 				}
 			}
@@ -442,23 +491,43 @@ public class PartnerPreActivity extends Activity {
 				etBoxCode.selectAll();
 				etBoxCode.requestFocus();
 				Toaster.toaster(msg.obj.toString());
+				mediaPlayer.setVolume(1.0f, 1.0f);
+				mediaPlayer.start();
+				tvmsg.setVisibility(View.VISIBLE);
+				tvmsg.setText(msg.obj.toString());
 				break;
 			case 3:
 				etbarcode.selectAll();
 				etbarcode.requestFocus();
+				mediaPlayer.setVolume(1.0f, 1.0f);
+				mediaPlayer.start();
+				tvmsg.setVisibility(View.VISIBLE);
+				tvmsg.setText(msg.obj.toString());
 				break;
 			case 4:
+				tvProcess.setText(processInfo);
 				etbarcode.setText("");
 				etbarcode.selectAll();
 				etbarcode.requestFocus();
 				Toaster.toaster(msg.obj.toString());
+				mediaPlayer.setVolume(1.0f, 1.0f);
+				mediaPlayer.start();
+				tvmsg.setVisibility(View.VISIBLE);
+				tvmsg.setText(msg.obj.toString());
 				break;
 			case 5:
 				PreprocessInfo preprocessInfo=(PreprocessInfo)msg.obj;
-				tvProcess.setText("");
 				tvGoodsName.setText(preprocessInfo.getGoodsName());
 				tvModel.setText(preprocessInfo.getModelNum().toString());
 				tvWeight.setText(preprocessInfo.getPackWeight().toString());
+				break;
+			case 6:
+				
+				  Intent  data= new Intent();   
+	              data.putExtra("returnmsg","");  
+	              setResult(Activity.RESULT_OK,data);  
+	              finish();  
+	              
 				break;
 			default:
 				break;
@@ -471,5 +540,13 @@ public class PartnerPreActivity extends Activity {
 		super.onStart();
 
 	}
+	
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mediaPlayer != null) {
+			mediaPlayer.stop();
+			mediaPlayer.release();
+		}
+	};
 
 }

@@ -78,10 +78,8 @@ public class ScanFragment extends Fragment {
 			tvversion.setText(versionInfo.getVersionId());
 		}
 
-		lv = (ListView) view.findViewById(R.id.lv);
-		initevent();
 		init();
-		bindlist();
+		
 		return view;
 	}
 
@@ -163,127 +161,6 @@ public class ScanFragment extends Fragment {
 		}
 	}
 //主界面的操作记录信息显示
-	private void bindlist() {
-		//拿前四条操作记录
-		List<WorkItem> list = ruKuDao.getTopNWorkItem();
-		if (list != null & list.size() > 0) {
-			List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
-			for (WorkItem item : list) {
-				Long count = itemDataDao.getTotalCount(item.getItemno());
-				double num = itemDataDao.GetTotalNum(item.getItemno());
-				if(!item.getItemstate().equals("s10")&&!item.getItemstate().equals("s09")){
-					continue;
-				}
-				Map<String, Object> map = new HashMap<String, Object>();
-				if (item.getItemtype().equals("w1")) {
-					map.put("itemno", "[入库]" + item.getItemno());
-					map.put("img", R.drawable.pandian);
-				} else if (item.getItemtype().equals("w2")) {
-					map.put("itemno", "[出库]" + item.getItemno());
-					map.put("img", R.drawable.pandian);
-				} else if (item.getItemtype().equals("w3")) {
-					map.put("itemno", "[盘点]" + item.getItemno());
-					map.put("img", R.drawable.pandian);
-				} else {
-					map.put("itemno", "" + item.getItemno());
-					map.put("img", R.drawable.pandian);
-				}
-
-				if (item.getItemstate().equals("s10")) {//已完成
-					map.put("state", "●");
-				} 
-				else if(item.getItemstate().equals("s09")){//正在操作
-					map.put("state", "○");
-				}
-				else{//尚未操作
-//					map.put("state", "☆");
-				}
-				map.put("time", Common.getStringDate(item.getWorktime()));
-				map.put("count", "[条数]" + count);
-				map.put("num", "[总数]" + num);
-				map.put("code", item.getItemno());
-				map.put("type", item.getItemtype());
-				mapList.add(map);
-			}
-
-			SimpleAdapter adp = new SimpleAdapter(getActivity(), mapList,
-					R.layout.listworkitem, new String[] { "itemno", "state",
-							"time", "count", "num", "img", "code", "type" },
-					new int[] { R.id.tvruku, R.id.tvstate, R.id.tvtime,
-							R.id.tvcount, R.id.tvnum, R.id.img, R.id.tvcode,
-							R.id.tvtype });
-			lv.setAdapter(adp);
-		}
-	}
-	public class SpecialAdapter extends SimpleAdapter{  
-		LayoutInflater inflator;
-	    @SuppressWarnings("unchecked")
-		public SpecialAdapter(Context context, List<? extends Map<String, ?>> data,  
-	            int resource, String[] from, int[] to) {  
-	        super(context, data, resource, from, to);  
-	    	inflator = LayoutInflater.from(context);
-	        // TODO Auto-generated constructor stub  
-	    }  
-	    /* (non-Javadoc) 
-	     * @see android.widget.SimpleAdapter#getView(int, android.view.View, android.view.ViewGroup) 
-	     */  
-	    @SuppressWarnings("unchecked")
-		@Override  
-	    public View getView(int position, View convertView, ViewGroup parent) {  
-	        // TODO Auto-generated method stub  
-	    	if (convertView == null) {
-                convertView = inflator.inflate(android.R.layout.simple_list_item_2, parent, false);
-            }
-	        TextView view = (TextView) convertView.findViewById(android.R.id.text1);
-	        TextView view1 = (TextView) convertView.findViewById(android.R.id.text2);
-	        view.setTextSize(14);
-	        view1.setTextSize(14);
-	        return convertView;  
-	    }  
-	} 
-//主界面，操作记录点击事件
-	private void initevent() {
-
-		wologiccalculator.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent();
-				intent.setClassName("com.android.calculator2", "com.android.calculator2.Calculator");
-				startActivity(intent);
-			}
-			
-		});
-		lv.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// 获取当前选择的入库单号
-				TextView tvcode = (TextView) arg1.findViewById(R.id.tvcode);// 来源单号
-				TextView tvtype = (TextView) arg1.findViewById(R.id.tvtype);// 来源单号
-				//首先判断本地数据库是否已经包含此单号，不包含则向服务器取回单号的详细信息			
-				if (tvtype.getText().equals("w1")) {
-					Intent intent = new Intent(getActivity(),
-							RuKuGoodsActivity.class);
-					intent.putExtra("itemno", tvcode.getText());// 传递入库单号
-					startActivity(intent);
-				}
-				if (tvtype.getText().equals("w2")) {
-					Intent intent = new Intent(getActivity(),
-							ChuKuGoodsActivity.class);
-					intent.putExtra("itemno", tvcode.getText());// 传递入库单号
-					startActivity(intent);
-				}
-				if (tvtype.getText().equals("w3")) {
-					Intent intent = new Intent(getActivity(),
-							PanDianGoodsActivity.class);
-					intent.putExtra("itemno", tvcode.getText());// 传递入库单号
-					startActivity(intent);
-				}
-
-			}
-		});
-	}
+	
 
 }

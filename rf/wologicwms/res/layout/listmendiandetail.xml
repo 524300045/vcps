@@ -126,7 +126,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="5dp"
-            android:text="强制完成(F8)"
+            android:text="强制完成"
             android:textColor="#333333" />
     </LinearLayout>
 

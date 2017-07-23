@@ -6,5 +6,5 @@ public class Constant {
    public static int version=1;
    
    //Urlµÿ÷∑
-   public static String url=" http://192.168.0.8:8089/webservice/services";
+   public static String url=" http://10.5.2.107:8089/webservice/services";
 }

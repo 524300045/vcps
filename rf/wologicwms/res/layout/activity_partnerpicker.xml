@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="供应商分拣"
+            android:text="供应商包装"
             android:textColor="#ffffff"
             android:textSize="18sp" />
     </RelativeLayout>
@@ -75,7 +75,7 @@
                 android:background="@null"
                 android:gravity="top"
                 android:singleLine="true"
-                android:text="1101020170720001"
+                android:text=""
                 android:textSize="18dip" />
         </LinearLayout>
 
@@ -89,7 +89,7 @@
             android:textSize="15sp"
             android:visibility="gone" />
 
-       <!--  <LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -112,11 +112,41 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="大白菜"
+                android:text=""
                 android:textColor="#333333"
                 android:textSize="15sp" />
         </LinearLayout>
- -->
+        
+        <LinearLayout
+             android:id="@+id/llprocess"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#EAEAEA"
+            android:gravity="top"
+             android:visibility="gone"
+            android:orientation="horizontal"
+            android:paddingTop="5dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="总进度(包装数):"
+                android:textColor="#333333"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvProcess"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=""
+                android:textColor="#333333"
+                android:textSize="15sp" />
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/ll"
             android:layout_width="match_parent"
@@ -147,10 +177,10 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left"
-                    android:text="分拣/需求"
+                    android:text="已装箱/需求 包装数"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
             </LinearLayout>

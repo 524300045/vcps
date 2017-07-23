@@ -24,6 +24,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,43 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 //主界面显示设置,table1存放显示的图标信息
 public class MainTwoActivity extends Activity {
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
+		if(keyCode==97)
+		{
+			Intent intent=new Intent(MainTwoActivity.this,PickerActivity.class);
+			startActivity(intent);
+			return true;
+		}
+		if(keyCode==64)
+		{
+			Intent intent=new Intent(MainTwoActivity.this,CancelPickerActivity.class);
+			startActivity(intent);
+			return true;
+		}
+		if(keyCode==2)
+		{
+			Intent intent=new Intent(MainTwoActivity.this,ExecActivity.class);
+			startActivity(intent);
+			return true;
+		}
+		if(keyCode==106)
+		{
+			Intent intent=new Intent(MainTwoActivity.this,PartnerPickerActivity.class);
+			startActivity(intent);
+			return true;
+		}
+		if(keyCode==96)
+		{
+			finish(); 
+			Intent intent=new Intent(MainTwoActivity.this,LoginActivity.class);
+			startActivity(intent);
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 
 	private ImageView imgruku, imgmore, imgfahuo, imgchuku, imgpandian;
 
@@ -69,25 +107,20 @@ public class MainTwoActivity extends Activity {
 		
 		WFuction wone=new WFuction();
 		wone.setFuctionid("fj");
-		wone.setFuctionname("包裹分拣(F2)");
+		wone.setFuctionname("分拣(F2)");
 		
 		WFuction wtwo=new WFuction();
 		wtwo.setFuctionid("qxfj");
-		wtwo.setFuctionname("取消分拣(F3)");
+		wtwo.setFuctionname("解除装箱(F3)");
 		
-		WFuction wThree=new WFuction();
+		/*WFuction wThree=new WFuction();
 		wThree.setFuctionid("ex");
-		wThree.setFuctionname("异常处理(F4)");
+		wThree.setFuctionname("异常处理(F4)");*/
 		
-		
-		/*WFuction wfour=new WFuction();
-		wfour.setFuctionid("ck");
-		wfour.setFuctionname("出库发运(F5)");
-		*/
 		
 		WFuction wPartnerPre=new WFuction();
 		wPartnerPre.setFuctionid("pp");
-		wPartnerPre.setFuctionname("供应商分拣(F5)");
+		wPartnerPre.setFuctionname("供应商装箱(F5)");
 		
 		/*WFuction wPartnerOrder=new WFuction();
 		wThree.setFuctionid("po");
@@ -96,12 +129,12 @@ public class MainTwoActivity extends Activity {
 		
 		WFuction wexit=new WFuction();
 		wexit.setFuctionid("exit");
-		wexit.setFuctionname("重新登录(F12)");
+		wexit.setFuctionname("重新登录(F1)");
 		
 		
 		list.add(wone);
 		list.add(wtwo);
-		list.add(wThree);
+		//list.add(wThree);
 		list.add(wPartnerPre);
 		//list.add(wPartnerOrder);
 		//list.add(wfour);

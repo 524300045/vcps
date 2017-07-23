@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="3dp"
-        android:text="VCPS仓库管理系统"
+        android:text="分拣系统"
         android:textColor="@color/white"
         android:textSize="20sp" />
                

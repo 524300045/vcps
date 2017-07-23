@@ -73,6 +73,8 @@ public class ContentAdapter extends BaseAdapter implements  OnClickListener {
                     .findViewById(R.id.tvfinishNum);
             holder.tvtotalnum = (TextView) convertView
                     .findViewById(R.id.tvTotalNum);
+            holder.tvtaskcode=(TextView) convertView
+                    .findViewById(R.id.tvtaskcode);
             
             holder.button = (Button) convertView.findViewById(R.id.btnSure);
             convertView.setTag(holder);

@@ -69,7 +69,7 @@ public class LoginActivity extends Activity implements OnItemClickListener {
 		btn_logout = (Button) findViewById(R.id.btn_logout);
 		et_userName = (EditText) findViewById(R.id.et_userName);
 		et_userPassword = (EditText) findViewById(R.id.et_userPassword);
-		et_userName.setText("001");
+		et_userName.setText("10");
 		et_userPassword.setText("001");
 		
 		btn_login.setOnClickListener(new OnClickListener() {

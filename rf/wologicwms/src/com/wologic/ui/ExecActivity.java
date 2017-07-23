@@ -45,7 +45,7 @@ public class ExecActivity extends Activity implements OnItemClickListener,
 
 	private TextView tbBack;
 
-	private int totalCount;// 总的记录数
+	private MediaPlayer mediaPlayer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +59,19 @@ public class ExecActivity extends Activity implements OnItemClickListener,
 				finish();
 			}
 		});
+		mediaPlayer = MediaPlayer.create(
+				ExecActivity.this, R.raw.error);
+		
 		getList();
 	}
+	
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mediaPlayer != null) {
+			mediaPlayer.stop();
+			mediaPlayer.release();
+		}
+	};
 
 	private void getList() {
 		Thread mThread = new Thread(new Runnable() {
@@ -99,7 +110,7 @@ public class ExecActivity extends Activity implements OnItemClickListener,
 					System.out.print(e.getMessage());
 					Message msg = new Message();
 					msg.what = 2;
-					msg.obj = "网络异常,请检查单号是否存在";
+					msg.obj = "网络异常,请检查网络连接";
 					handler.sendMessage(msg);
 				}
 			}
@@ -117,7 +128,9 @@ public class ExecActivity extends Activity implements OnItemClickListener,
 				bindList(list);
 				break;
 			case 2:
-
+				
+				mediaPlayer.setVolume(1.0f, 1.0f);
+				mediaPlayer.start();
 				Toaster.toaster(msg.obj.toString());
 				break;
 			default:
@@ -168,11 +181,11 @@ public class ExecActivity extends Activity implements OnItemClickListener,
 	 */
 	@Override
 	public void click(View v) {
-		Toast.makeText(
+		/*Toast.makeText(
 				ExecActivity.this,
 				"listview的内部的按钮被点击了！，位置是-->" + (Integer) v.getTag() + ",内容是-->"
 						+ mapList.get((Integer) v.getTag()).get("storeCode")
-						+ "--", Toast.LENGTH_SHORT).show();
+						+ "--", Toast.LENGTH_SHORT).show();*/
 		Integer finishNum = (Integer) mapList.get((Integer) v.getTag()).get(
 				"finishnum");
 		Integer totalNum = (Integer) mapList.get((Integer) v.getTag()).get(
