@@ -185,7 +185,7 @@ public class PartnerPickerActivity extends Activity {
 						.toString());
 				intent.putExtra("processInfo", tvProcess.getText()
 						.toString());
-				
+			    intent.putExtra("skuCode", goodsCode);
 				if(!tvProcess.getText().toString().equals(""))
 				{
 					String[] splitArr=tvProcess.getText().toString().split("/");

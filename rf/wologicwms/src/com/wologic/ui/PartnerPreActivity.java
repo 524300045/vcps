@@ -43,7 +43,7 @@ public class PartnerPreActivity extends Activity {
 	private TextView tvmsg, tvProcess, tvStoreName, tvGoodsName, tvModel,
 			tvWeight;
 
-	private String storeCode, storeName,ousStockCode,packTaskCode;
+	private String storeCode, storeName,ousStockCode,packTaskCode,skuCode,goodsName;
 
 	private Long taskDetailId;
 	
@@ -78,6 +78,7 @@ public class PartnerPreActivity extends Activity {
 			packTaskCode=intent.getStringExtra("packTaskCode");
 			lastPackageCode=intent.getStringExtra("lastPackageCode");
 			processInfo=intent.getStringExtra("processInfo");
+			skuCode=intent.getStringExtra("skuCode");
 		}
 
 		tvProcess = (TextView) findViewById(R.id.tvProcess);
@@ -328,7 +329,14 @@ public class PartnerPreActivity extends Activity {
 												.parseObject(jsonSearch2
 														.optString("result"),
 														PreprocessInfo.class);
-										if (preprocessInfo.getStatus() == 1) {
+										if(!preprocessInfo.getSkuCode().equals(skuCode))
+										{
+											Message msg = new Message();
+											msg.what = 3;
+											msg.obj = "包装错误，请扫描["+goodsName+"]的包装";
+											handler.sendMessage(msg);
+										}
+										else if (preprocessInfo.getStatus() == 1) {
 											Message msg = new Message();
 											msg.what = 3;
 											msg.obj = "当前包裹已经被占用";
@@ -477,6 +485,7 @@ public class PartnerPreActivity extends Activity {
 			case 5:
 				PreprocessInfo preprocessInfo=(PreprocessInfo)msg.obj;
 				tvGoodsName.setText(preprocessInfo.getGoodsName());
+				goodsName=preprocessInfo.getGoodsName();
 				tvModel.setText(preprocessInfo.getModelNum().toString());
 				tvWeight.setText(preprocessInfo.getPackWeight().toString());
 				break;
