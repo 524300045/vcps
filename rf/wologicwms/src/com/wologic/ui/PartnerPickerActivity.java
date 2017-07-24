@@ -308,7 +308,7 @@ public class PartnerPickerActivity extends Activity {
 																		.opt("result")
 																		.toString(),
 																PackTaskDetail.class);
-												if (packTaskDetailList != null) {
+												if (packTaskDetailList != null&&packTaskDetailList.size()>0) {
 													goodsCode=packTaskDetailList.get(0).getSkuCode();
 													goodsName = packTaskDetailList
 															.get(0)
@@ -329,6 +329,14 @@ public class PartnerPickerActivity extends Activity {
 													msg.what = 4;
 													msg.obj = "";
 													handler.sendMessage(msg);
+												}
+												else
+												{
+													Message msg = new Message();
+													msg.what = 2;
+													msg.obj = "获取不到门店需求信息";
+													handler.sendMessage(msg);
+													
 												}
 											}
 										} else {
