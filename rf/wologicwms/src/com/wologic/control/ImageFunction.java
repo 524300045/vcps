@@ -12,6 +12,7 @@ import com.wologic.ui.PartnerPickerActivity;
 import com.wologic.ui.PartnerPreActivity;
 import com.wologic.ui.PickerActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -90,6 +91,8 @@ public class ImageFunction extends LinearLayout {
               }
               if(functionId.equals("exit"))
               {
+            	  Activity activity = (Activity) context;
+            	  activity.finish();
             	  final Intent intent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
                   intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                   context.startActivity(intent);

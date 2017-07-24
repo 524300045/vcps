@@ -5,6 +5,8 @@ public class Constant {
    
    public static int version=1;
    
-   //Urlµÿ÷∑
-   public static String url=" http://172.31.25.228:8089/webservice/services";
+   //Urlµÿ÷∑http://api.cooperate.bjkalf.net:8080/services/goods/getGoodsList
+  // public static String url=" http://172.31.25.228:8089/webservice/services";
+   
+   public static String url=" http://api.cooperate.bjkalf.net:8080/services";
 }
