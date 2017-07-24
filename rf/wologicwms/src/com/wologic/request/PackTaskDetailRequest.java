@@ -51,7 +51,17 @@ public class PackTaskDetailRequest {
     /**  «∑Ò”––ß */
     private Integer yn; 
     
-    public Long getId(){
+    private String partnerCode ;
+    
+    public String getPartnerCode() {
+		return partnerCode;
+	}
+
+	public void setPartnerCode(String partnerCode) {
+		this.partnerCode = partnerCode;
+	}
+
+	public Long getId(){
         return id;
     }
         

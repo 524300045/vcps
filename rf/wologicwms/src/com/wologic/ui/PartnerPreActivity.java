@@ -28,6 +28,7 @@ import com.wologic.request.BoxInfoRequest;
 import com.wologic.request.PackTaskDetailRequest;
 import com.wologic.request.PackageDetailRequest;
 import com.wologic.request.PreprocessInfoRequest;
+import com.wologic.util.Common;
 import com.wologic.util.Constant;
 import com.wologic.util.Toaster;
 
@@ -238,52 +239,8 @@ public class PartnerPreActivity extends Activity {
 
 	}
 
-	private void getPackageDetail(final String packageCode) {
-		Thread mThread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
 
-					HttpClient client = com.wologic.util.SimpleClient
-							.getHttpClient();
-
-					String searchUrl = Constant.url
-							+ "/packageDetail/getPackageDetailByCode";
-
-					PackageDetailRequest packageDetailRequest = new PackageDetailRequest();
-					packageDetailRequest.setPackageCode(packageCode);
-					String json = JSON.toJSONString(packageDetailRequest);
-					String resultSearch = com.wologic.util.SimpleClient
-							.httpPost(searchUrl, json);
-
-					JSONObject jsonSearch = new JSONObject(resultSearch);
-					if (jsonSearch.optString("code").toString().equals("200")) {
-						PackageAllDetail packageDetail = JSON.parseObject(
-								jsonSearch.optString("result"),
-								PackageAllDetail.class);
-						Message msg = new Message();
-						msg.what = 1;
-						msg.obj = packageDetail;
-						handler.sendMessage(msg);
-					} else {
-						Message msg = new Message();
-						msg.what = 2;
-						msg.obj = jsonSearch.optString("message");
-						handler.sendMessage(msg);
-					}
-
-				} catch (Exception e) {
-					System.out.print(e.getMessage());
-					Message msg = new Message();
-					msg.what = 2;
-					msg.obj = "Õ¯¬Á“Ï≥£,«ÎºÏ≤ÈÕ¯¬Á¡¨Ω”";
-					handler.sendMessage(msg);
-				}
-			}
-		});
-		mThread.start();
-	}
-
+	
 	private void sumbit() {
 
 		final String boxCode = etBoxCode.getText().toString().trim();
@@ -347,6 +304,8 @@ public class PartnerPreActivity extends Activity {
 								PreprocessInfoRequest preprocessInfoRequest = new PreprocessInfoRequest();
 								preprocessInfoRequest
 										.setPreprocessCode(packageCode);
+								preprocessInfoRequest.setPartnerCode(Common.partnerCode);
+								
 								String json2 = JSON
 										.toJSONString(preprocessInfoRequest);
 								String resultSearch2 = com.wologic.util.SimpleClient
@@ -392,7 +351,7 @@ public class PartnerPreActivity extends Activity {
 											packageDetailRequest.setProcessUser(MyApplication.getAppContext().getUsername());
 											packageDetailRequest.setCreateUser(MyApplication.getAppContext().getUsername());
 											packageDetailRequest.setUpdateUser(MyApplication.getAppContext().getUsername());
-											
+											packageDetailRequest.setPartnerCode(Common.partnerCode);
 											
 											String json3 = JSON
 													.toJSONString(packageDetailRequest);

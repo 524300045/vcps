@@ -12,6 +12,15 @@ public class Common {
 	public static String deviceid = "123";
 	
 	public static String clientId="1";
+	
+	/**
+	 * π©”¶…Ã±‡¬Î
+	 */
+	public static String partnerCode="";
+	
+	public static String partnerName="";
+	
+	
 
 	public static Date StrToDate(String str) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

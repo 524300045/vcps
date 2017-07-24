@@ -37,6 +37,7 @@ import com.wologic.domainnew.PreprocessInfo;
 import com.wologic.request.PackTaskDetailRequest;
 import com.wologic.request.PackageDetailRequest;
 import com.wologic.request.PreprocessInfoRequest;
+import com.wologic.util.Common;
 import com.wologic.util.Constant;
 import com.wologic.util.Toaster;
 
@@ -241,6 +242,9 @@ public class PartnerPickerActivity extends Activity {
 							PreprocessInfoRequest preprocessInfoRequest = new PreprocessInfoRequest();
 							preprocessInfoRequest
 									.setPreprocessCode(packageCode);
+							
+							preprocessInfoRequest.setPartnerCode(Common.partnerCode);
+							
 							String json3 = JSON
 									.toJSONString(preprocessInfoRequest);
 							String resultSearch3 = com.wologic.util.SimpleClient
@@ -278,7 +282,7 @@ public class PartnerPickerActivity extends Activity {
 										PackTaskDetailRequest packTaskDetailRequest = new PackTaskDetailRequest();
 										packTaskDetailRequest
 												.setSkuCode(skuCode);
-
+										packTaskDetailRequest.setPartnerCode(Common.partnerCode);
 										String json4 = JSON
 												.toJSONString(packTaskDetailRequest);
 										String resultSearch4 = com.wologic.util.SimpleClient
