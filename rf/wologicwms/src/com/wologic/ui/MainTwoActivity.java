@@ -120,7 +120,7 @@ public class MainTwoActivity extends Activity {
 		
 		WFuction wPartnerPre=new WFuction();
 		wPartnerPre.setFuctionid("pp");
-		wPartnerPre.setFuctionname("供应商装箱(F5)");
+		wPartnerPre.setFuctionname("包装装箱(F5)");
 		
 		/*WFuction wPartnerOrder=new WFuction();
 		wThree.setFuctionid("po");

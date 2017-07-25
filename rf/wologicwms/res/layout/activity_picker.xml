@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="包裹分拣"
+            android:text="分拣"
             android:textColor="#ffffff"
             android:textSize="18sp" />
     </RelativeLayout>

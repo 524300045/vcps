@@ -3,6 +3,7 @@ package com.wologic.ui;
 import java.util.List;
 
 import org.apache.http.client.HttpClient;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -41,6 +42,7 @@ public class PickerActivity extends Activity {
 
 	private MediaPlayer mediaPlayer;
 	
+	private String outBoundTaskCode="";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -221,6 +223,56 @@ public class PickerActivity extends Activity {
 		});
 		mThread.start();
 	}
+	
+	private void getProcess(final String outTaskCode)
+	{
+		
+		Thread mThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					
+					String	searchUrl = Constant.url
+							+ "/outBoundDetail/getFinishInfo";
+					
+					OutBoundRequest outBoundRequest=new OutBoundRequest();
+					outBoundRequest.setStoredCode(outTaskCode);
+					String json2=JSON.toJSONString(outBoundRequest);
+					String resultSearch2 = com.wologic.util.SimpleClient.httpPost(searchUrl, json2);
+					
+					JSONObject jsonSearch2;
+					try {
+						jsonSearch2 = new JSONObject(resultSearch2);
+						
+						if(jsonSearch2.optString("code").toString().equals("200"))
+						{
+							Message msg5 = new Message();
+							msg5.what =5;
+							msg5.obj = jsonSearch2.optString("result");
+							handler.sendMessage(msg5);
+						}
+						
+						
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					
+			} catch (Exception e) {
+				System.out.print(e.getMessage());
+				Message msg = new Message();
+				msg.what = 2;
+				msg.obj = "网络异常,请检查网络连接";
+				handler.sendMessage(msg);
+			}
+		}
+	});
+	mThread.start();
+				
+	   
+		
+	}
 
 	private void sumbit() {
 		
@@ -295,6 +347,10 @@ public class PickerActivity extends Activity {
 									msg.what = 4;
 									msg.obj = "分拣完成";
 									handler.sendMessage(msg);
+									if(null!=outBoundTaskCode&&!outBoundTaskCode.equals(""))
+									{
+										getProcess(outBoundTaskCode);
+									}
 								}
 								else if(jsonSearch2.optString("code").toString().equals("302"))
 								{
@@ -364,6 +420,7 @@ public class PickerActivity extends Activity {
 						}
 					}
 					tvStoreName.setText(packageDetailList.get(0).getStoredName());
+					outBoundTaskCode=packageDetailList.get(0).getOutboundTaskCode();
 				}
 				tvProcess.setText(finishNum+"/"+totalNum);
 				etStore.requestFocus();
@@ -394,8 +451,8 @@ public class PickerActivity extends Activity {
 				Toaster.toaster(msg.obj.toString());
 				tvmsg.setText(msg.obj.toString());
 				tvmsg.setVisibility(View.VISIBLE);
-				mediaPlayer.setVolume(1.0f, 1.0f);
-				mediaPlayer.start();
+//				mediaPlayer.setVolume(1.0f, 1.0f);
+//				mediaPlayer.start();
 				break;
 			case 5:
 				tvProcess.setText(msg.obj.toString());

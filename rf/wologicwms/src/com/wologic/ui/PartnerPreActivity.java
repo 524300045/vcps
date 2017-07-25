@@ -339,7 +339,7 @@ public class PartnerPreActivity extends Activity {
 										else if (preprocessInfo.getStatus() == 1) {
 											Message msg = new Message();
 											msg.what = 3;
-											msg.obj = "当前包裹已经被占用";
+											msg.obj = "此包裹已装箱";
 											handler.sendMessage(msg);
 										} else {
 
