@@ -25,6 +25,7 @@ import com.wologic.application.MyApplication;
 import com.wologic.domainnew.PackageAllDetail;
 import com.wologic.request.OutBoundRequest;
 import com.wologic.request.PackageDetailRequest;
+import com.wologic.util.Common;
 import com.wologic.util.Constant;
 import com.wologic.util.Toaster;
 
@@ -179,12 +180,20 @@ public class PickerActivity extends Activity {
 						msg.obj = packageDetailList;
 						handler.sendMessage(msg);
 						
-						searchUrl = Constant.url
+						/*searchUrl = Constant.url
 								+ "/outBoundDetail/getFinishInfo";
 						
 						OutBoundRequest outBoundRequest=new OutBoundRequest();
 						outBoundRequest.setStoredCode(packageDetailList.get(0).getOutboundTaskCode());
-						String json2=JSON.toJSONString(outBoundRequest);
+						String json2=JSON.toJSONString(outBoundRequest);*/
+						
+						searchUrl = Constant.url
+								+ "/packageDetail/getPickProcess";
+						
+						PackageDetailRequest detailRequest=new PackageDetailRequest();
+						detailRequest.setPackageCode(packageDetailList.get(0).getPackageCode());
+						//detailRequest.setPartnerCode(Common.partnerCode);
+						String json2=JSON.toJSONString(detailRequest);
 						String resultSearch2 = com.wologic.util.SimpleClient.httpPost(searchUrl, json2);
 						
 						JSONObject jsonSearch2 = new JSONObject(resultSearch2);
@@ -224,7 +233,7 @@ public class PickerActivity extends Activity {
 		mThread.start();
 	}
 	
-	private void getProcess(final String outTaskCode)
+	private void getProcess(final String packageCode)
 	{
 		
 		Thread mThread = new Thread(new Runnable() {
@@ -233,11 +242,18 @@ public class PickerActivity extends Activity {
 				try {
 					
 					String	searchUrl = Constant.url
-							+ "/outBoundDetail/getFinishInfo";
+							+ "/packageDetail/getPickProcess";
 					
-					OutBoundRequest outBoundRequest=new OutBoundRequest();
+					/*OutBoundRequest outBoundRequest=new OutBoundRequest();
 					outBoundRequest.setStoredCode(outTaskCode);
 					String json2=JSON.toJSONString(outBoundRequest);
+					String resultSearch2 = com.wologic.util.SimpleClient.httpPost(searchUrl, json2);*/
+					
+					PackageDetailRequest detailRequest=new PackageDetailRequest();
+					
+					detailRequest.setPackageCode(packageCode);
+					//detailRequest.setPartnerCode(Common.partnerCode);
+					String json2=JSON.toJSONString(detailRequest);
 					String resultSearch2 = com.wologic.util.SimpleClient.httpPost(searchUrl, json2);
 					
 					JSONObject jsonSearch2;
@@ -321,7 +337,9 @@ public class PickerActivity extends Activity {
 					JSONObject jsonSearch = new JSONObject(resultSearch);
 					if(jsonSearch.optString("code").toString().equals("200"))
 					{
+						
 						List<PackageAllDetail> packageDetailList=JSON.parseArray(jsonSearch.optString("result"),PackageAllDetail.class);
+						
 						if(!packageDetailList.get(0).getStoredCode().equals(storeCode))
 						{
 							Message msg = new Message();
@@ -336,6 +354,7 @@ public class PickerActivity extends Activity {
 
 								PackageDetailRequest detailRequest=new PackageDetailRequest();
 								detailRequest.setBoxCode(packageCode);
+								//detailRequest.setPartnerCode(Common.partnerCode);
 								
 								detailRequest.setCreateUser(MyApplication.getAppContext().getUsername());
 								String json2=JSON.toJSONString(detailRequest);
@@ -349,7 +368,7 @@ public class PickerActivity extends Activity {
 									handler.sendMessage(msg);
 									if(null!=outBoundTaskCode&&!outBoundTaskCode.equals(""))
 									{
-										getProcess(outBoundTaskCode);
+										getProcess(packageDetailList.get(0).getPackageCode());
 									}
 								}
 								else if(jsonSearch2.optString("code").toString().equals("302"))

@@ -3,6 +3,7 @@ package com.wologic.ui;
 import java.util.List;
 
 import org.apache.http.client.HttpClient;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -133,10 +134,10 @@ public class CancelPickerActivity extends Activity {
 							.getHttpClient();
 
 					String searchUrl = Constant.url
-							+ "/packageDetail/getPackageDetailByBoxCode";
+							+ "/packageDetail/getPackageDetailByPackageCode";
 
 					PackageDetailRequest packageDetailRequest = new PackageDetailRequest();
-					packageDetailRequest.setBoxCode(packageCode);
+					packageDetailRequest.setPackageCode(packageCode);
 					String json = JSON.toJSONString(packageDetailRequest);
 					String resultSearch = com.wologic.util.SimpleClient
 							.httpPost(searchUrl, json);
@@ -144,14 +145,27 @@ public class CancelPickerActivity extends Activity {
 					JSONObject jsonSearch = new JSONObject(resultSearch);
 					if (jsonSearch.optString("code").toString().equals("200")) {
 
-						List<PackageAllDetail> packageDetailList = JSON
-								.parseArray(jsonSearch.optString("result"),
-										PackageAllDetail.class);
+						/*
+						 * List<PackageAllDetail> packageDetailList = JSON
+						 * .parseArray(jsonSearch.optString("result"),
+						 * PackageAllDetail.class);
+						 */
+						PackageAllDetail detail = JSON.parseObject(
+								jsonSearch.optString("result"),
+								PackageAllDetail.class);
 						// storeCode=packageDetailList.get(0).getStoredCode();
-						Message msg = new Message();
-						msg.what = 5;
-						msg.obj = packageDetailList;
-						handler.sendMessage(msg);
+
+						if (!detail.getStatus().equals(5)) {
+							Message msg = new Message();
+							msg.what = 2;
+							msg.obj = "当前包裹还未包装";
+							handler.sendMessage(msg);
+						} else {
+							Message msg = new Message();
+							msg.what = 5;
+							msg.obj = detail;
+							handler.sendMessage(msg);
+						}
 
 					} else if (jsonSearch.optString("code").toString()
 							.equals("302")) {
@@ -216,36 +230,52 @@ public class CancelPickerActivity extends Activity {
 							msg.obj = "查询不到包裹信息";
 							handler.sendMessage(msg);
 						} else {
-                           
-							//开心执行解除包装操作
-							
-							 searchUrl = Constant.url
-									+ "/packageDetail/cancelPickNew";
 
-							PackageDetailRequest packageDetailRequest2 = new PackageDetailRequest();
-							packageDetailRequest2.setPackageCode(packageCode);
-							packageDetailRequest2.setCreateUser(Common.RealName);
-							String json2 = JSON.toJSONString(packageDetailRequest2);
-							String resultSearch2 = com.wologic.util.SimpleClient
-									.httpPost(searchUrl, json2);
+							PackageAllDetail detail = JSON.parseObject(
+									jsonSearch.optString("result"),
+									PackageAllDetail.class);
+							// storeCode=packageDetailList.get(0).getStoredCode();
 
-							JSONObject jsonSearch2 = new JSONObject(resultSearch2);
-							
-							if (jsonSearch2.optString("code").toString().equals("200"))
-							{
-								Message msg = new Message();
-								msg.what = 1;
-								msg.obj = "拆箱成功";
-								handler.sendMessage(msg);
-							}
-							else
-							{
+							if (!detail.getStatus().equals(5)) {
 								Message msg = new Message();
 								msg.what = 2;
-								msg.obj = jsonSearch.optString("message");;
+								msg.obj = "当前包裹还未包装";
 								handler.sendMessage(msg);
+							} else {
+
+								searchUrl = Constant.url
+										+ "/packageDetail/cancelPickNew";
+
+								PackageDetailRequest packageDetailRequest2 = new PackageDetailRequest();
+								packageDetailRequest2
+										.setPackageCode(packageCode);
+								packageDetailRequest2
+										.setCreateUser(Common.RealName);
+								String json2 = JSON
+										.toJSONString(packageDetailRequest2);
+								String resultSearch2 = com.wologic.util.SimpleClient
+										.httpPost(searchUrl, json2);
+
+								JSONObject jsonSearch2 = new JSONObject(
+										resultSearch2);
+
+								if (jsonSearch2.optString("code").toString()
+										.equals("200")) {
+									Message msg = new Message();
+									msg.what = 1;
+									msg.obj = "拆箱成功";
+									handler.sendMessage(msg);
+
+									// getProcess(packageCode);
+								} else {
+									Message msg = new Message();
+									msg.what = 2;
+									msg.obj = jsonSearch.optString("message");
+									;
+									handler.sendMessage(msg);
+								}
+
 							}
-							
 						}
 					} else {
 						Message msg = new Message();
@@ -288,7 +318,7 @@ public class CancelPickerActivity extends Activity {
 					JSONObject jsonSearch = new JSONObject(resultSearch);
 					if (jsonSearch.optString("code").toString().equals("200")) {
 						// 提交
-						searchUrl = Constant.url + "/packageDetail/cancelPick";
+						searchUrl = Constant.url + "/packageDetail/cancelPickNew";
 						PackageDetailRequest cancelPackageDetailRequest = new PackageDetailRequest();
 						cancelPackageDetailRequest.setBoxCode(packageCode);
 						String json2 = JSON
@@ -301,12 +331,12 @@ public class CancelPickerActivity extends Activity {
 
 							Message msg = new Message();
 							msg.what = 1;
-							msg.obj = jsonSearch.optString("message");
+							msg.obj = jsonSearch2.optString("message");
 							handler.sendMessage(msg);
 						} else {
 							Message msg = new Message();
 							msg.what = 2;
-							msg.obj = jsonSearch.optString("message");
+							msg.obj = jsonSearch2.optString("message");
 							handler.sendMessage(msg);
 
 						}
@@ -350,7 +380,7 @@ public class CancelPickerActivity extends Activity {
 				Toaster.toaster("取消分拣成功");
 				tvmsg.setText(msg.obj.toString());
 				tvmsg.setVisibility(View.VISIBLE);
-				
+
 				break;
 			case 2:
 				etbarcode.selectAll();
@@ -382,24 +412,25 @@ public class CancelPickerActivity extends Activity {
 				mediaPlayer.start();
 				break;
 			case 5:
-				List<PackageAllDetail> packageDetailList = (List<PackageAllDetail>) msg.obj;
-				int totalNum = 0;
-				int finishNum = 0;
-
-				if (packageDetailList != null) {
-					totalNum = packageDetailList.size();
-					for (PackageAllDetail item : packageDetailList) {
-						if (item.getStatus().equals(10)) {
-							finishNum += 1;
-						}
-					}
-					tvStoreName.setText(packageDetailList.get(0)
-							.getStoredName());
-				}
-				tvProcess.setText(finishNum + "/" + totalNum);
-
+				/*
+				 * List<PackageAllDetail> packageDetailList =
+				 * (List<PackageAllDetail>) msg.obj; int totalNum = 0; int
+				 * finishNum = 0;
+				 * 
+				 * if (packageDetailList != null) { totalNum =
+				 * packageDetailList.size(); for (PackageAllDetail item :
+				 * packageDetailList) { if (item.getStatus().equals(10)) {
+				 * finishNum += 1; } }
+				 * tvStoreName.setText(packageDetailList.get(0)
+				 * .getStoredName()); }
+				 */
+				PackageAllDetail detail = (PackageAllDetail) msg.obj;
 				etbarcode.selectAll();
 				etbarcode.requestFocus();
+				tvStoreName.setText(detail.getStoredName());
+			case 6:
+				tvProcess.setText(msg.obj.toString());
+				break;
 			default:
 				break;
 			}

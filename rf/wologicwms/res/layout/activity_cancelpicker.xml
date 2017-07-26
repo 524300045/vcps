@@ -102,6 +102,7 @@
             android:gravity="top"
             android:orientation="horizontal"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             android:paddingTop="5dp" >
 
             <TextView
@@ -118,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="10/500"
+                android:text=""
                 android:textColor="#333333"
                 android:textSize="15sp" />
 
@@ -149,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="10/500"
+                android:text=""
                 android:textColor="#333333"
                 android:textSize="15sp" />
 
@@ -183,7 +184,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
-                android:text="确定(Enter)"
+                android:text="确定"
                 android:textColor="#333333" />
              
         </LinearLayout>
