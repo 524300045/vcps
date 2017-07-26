@@ -85,7 +85,7 @@ public class MainTwoActivity extends Activity {
 
 	private TableLayout tl;
 	
-	private TextView tvtitle,tvversion;
+	private TextView tvtitle,tvversion,tvuser,tbPartener;
 	
 	private LinearLayout wologiccalculator;
 
@@ -96,8 +96,13 @@ public class MainTwoActivity extends Activity {
 		setContentView(R.layout.scanfragmentpage);
 		tl = (TableLayout)findViewById(R.id.table1);
 		tvtitle = (TextView)findViewById(R.id.tvtitle);
+		tvversion=(TextView)findViewById(R.id.tvversion);
+		tvuser=(TextView)findViewById(R.id.tvuser);
+		tbPartener=(TextView)findViewById(R.id.tbPartener);
 		
-		wologiccalculator = (LinearLayout)findViewById(R.id.wologiccalculator);
+		tvtitle.setText("·Ö¼ðÏµÍ³");
+		tvuser.setText(Common.RealName+"("+Common.UserName+")");
+		tbPartener.setText(Common.partnerName+"("+Common.partnerCode+")");
 		init();
 	}
 

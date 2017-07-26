@@ -22,6 +22,7 @@ import com.alibaba.fastjson.JSON;
 import com.wologic.R;
 import com.wologic.domainnew.PackageAllDetail;
 import com.wologic.request.PackageDetailRequest;
+import com.wologic.util.Common;
 import com.wologic.util.Constant;
 import com.wologic.util.Toaster;
 
@@ -33,7 +34,7 @@ public class CancelPickerActivity extends Activity {
 
 	private EditText etbarcode;
 
-	private TextView tvmsg,tvProcess,tvStoreName;;
+	private TextView tvmsg, tvProcess, tvStoreName;;
 
 	private Button btnSure;
 
@@ -57,8 +58,8 @@ public class CancelPickerActivity extends Activity {
 				.create(CancelPickerActivity.this, R.raw.error);
 
 		tvProcess = (TextView) findViewById(R.id.tvProcess);
-		tvStoreName=(TextView) findViewById(R.id.tvStoreName);
-		
+		tvStoreName = (TextView) findViewById(R.id.tvStoreName);
+
 		btnSure = (Button) findViewById(R.id.btnSure);
 		initEvent();
 	}
@@ -117,7 +118,7 @@ public class CancelPickerActivity extends Activity {
 
 					return;
 				}
-				sumbit(packageCode);
+				sumbitNew(packageCode);
 			}
 		});
 	}
@@ -143,10 +144,12 @@ public class CancelPickerActivity extends Activity {
 					JSONObject jsonSearch = new JSONObject(resultSearch);
 					if (jsonSearch.optString("code").toString().equals("200")) {
 
-						List<PackageAllDetail> packageDetailList=JSON.parseArray(jsonSearch.optString("result"),PackageAllDetail.class);
-						//storeCode=packageDetailList.get(0).getStoredCode();
+						List<PackageAllDetail> packageDetailList = JSON
+								.parseArray(jsonSearch.optString("result"),
+										PackageAllDetail.class);
+						// storeCode=packageDetailList.get(0).getStoredCode();
 						Message msg = new Message();
-						msg.what =5;
+						msg.what = 5;
 						msg.obj = packageDetailList;
 						handler.sendMessage(msg);
 
@@ -181,6 +184,88 @@ public class CancelPickerActivity extends Activity {
 
 	}
 
+	/**
+	 * 包裹拆箱
+	 */
+	private void sumbitNew(final String packageCode) {
+		Thread mThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+
+					HttpClient client = com.wologic.util.SimpleClient
+							.getHttpClient();
+
+					String searchUrl = Constant.url
+							+ "/packageDetail/getPackageDetailByPackageCode";
+
+					PackageDetailRequest packageDetailRequest = new PackageDetailRequest();
+					packageDetailRequest.setPackageCode(packageCode);
+					String json = JSON.toJSONString(packageDetailRequest);
+					String resultSearch = com.wologic.util.SimpleClient
+							.httpPost(searchUrl, json);
+
+					JSONObject jsonSearch = new JSONObject(resultSearch);
+					if (jsonSearch.optString("code").toString().equals("200")) {
+						if (null == jsonSearch.optString("result")
+								|| "null".equals(jsonSearch.opt("result")
+										.toString())) {
+
+							Message msg = new Message();
+							msg.what = 2;
+							msg.obj = "查询不到包裹信息";
+							handler.sendMessage(msg);
+						} else {
+                           
+							//开心执行解除包装操作
+							
+							 searchUrl = Constant.url
+									+ "/packageDetail/cancelPickNew";
+
+							PackageDetailRequest packageDetailRequest2 = new PackageDetailRequest();
+							packageDetailRequest2.setPackageCode(packageCode);
+							packageDetailRequest2.setCreateUser(Common.RealName);
+							String json2 = JSON.toJSONString(packageDetailRequest2);
+							String resultSearch2 = com.wologic.util.SimpleClient
+									.httpPost(searchUrl, json2);
+
+							JSONObject jsonSearch2 = new JSONObject(resultSearch2);
+							
+							if (jsonSearch2.optString("code").toString().equals("200"))
+							{
+								Message msg = new Message();
+								msg.what = 1;
+								msg.obj = "拆箱成功";
+								handler.sendMessage(msg);
+							}
+							else
+							{
+								Message msg = new Message();
+								msg.what = 2;
+								msg.obj = jsonSearch.optString("message");;
+								handler.sendMessage(msg);
+							}
+							
+						}
+					} else {
+						Message msg = new Message();
+						msg.what = 2;
+						msg.obj = jsonSearch.optString("message");
+						handler.sendMessage(msg);
+					}
+				} catch (Exception e) {
+					System.out.print(e.getMessage());
+					Message msg = new Message();
+					msg.what = 2;
+					msg.obj = "网络异常,请检查网络连接";
+					handler.sendMessage(msg);
+				}
+			}
+		});
+		mThread.start();
+
+	}
+
 	private void sumbit(final String packageCode) {
 
 		Thread mThread = new Thread(new Runnable() {
@@ -206,26 +291,25 @@ public class CancelPickerActivity extends Activity {
 						searchUrl = Constant.url + "/packageDetail/cancelPick";
 						PackageDetailRequest cancelPackageDetailRequest = new PackageDetailRequest();
 						cancelPackageDetailRequest.setBoxCode(packageCode);
-						String json2 = JSON.toJSONString(cancelPackageDetailRequest);
+						String json2 = JSON
+								.toJSONString(cancelPackageDetailRequest);
 						String resultSearch2 = com.wologic.util.SimpleClient
 								.httpPost(searchUrl, json2);
 						JSONObject jsonSearch2 = new JSONObject(resultSearch2);
-						if (jsonSearch2.optString("code").toString().equals("200")) {
-						
+						if (jsonSearch2.optString("code").toString()
+								.equals("200")) {
+
 							Message msg = new Message();
 							msg.what = 1;
 							msg.obj = jsonSearch.optString("message");
 							handler.sendMessage(msg);
-						}
-						else
-						{
+						} else {
 							Message msg = new Message();
 							msg.what = 2;
 							msg.obj = jsonSearch.optString("message");
 							handler.sendMessage(msg);
-							
+
 						}
-						
 
 					} else if (jsonSearch.optString("code").toString()
 							.equals("302")) {
@@ -264,6 +348,8 @@ public class CancelPickerActivity extends Activity {
 				etbarcode.requestFocus();
 
 				Toaster.toaster("取消分拣成功");
+				tvmsg.setText(msg.obj.toString());
+				tvmsg.setVisibility(View.VISIBLE);
 				
 				break;
 			case 2:
@@ -296,24 +382,22 @@ public class CancelPickerActivity extends Activity {
 				mediaPlayer.start();
 				break;
 			case 5:
-				List<PackageAllDetail> packageDetailList=(List<PackageAllDetail>)msg.obj;
-				int totalNum=0;
-				int finishNum=0;
-				
-				if(packageDetailList!=null)
-				{
-					totalNum=packageDetailList.size();
-					for(PackageAllDetail item:packageDetailList)
-					{
-						if(item.getStatus().equals(10))
-						{
-							finishNum+=1;
+				List<PackageAllDetail> packageDetailList = (List<PackageAllDetail>) msg.obj;
+				int totalNum = 0;
+				int finishNum = 0;
+
+				if (packageDetailList != null) {
+					totalNum = packageDetailList.size();
+					for (PackageAllDetail item : packageDetailList) {
+						if (item.getStatus().equals(10)) {
+							finishNum += 1;
 						}
 					}
-					tvStoreName.setText(packageDetailList.get(0).getStoredName());
+					tvStoreName.setText(packageDetailList.get(0)
+							.getStoredName());
 				}
-				tvProcess.setText(finishNum+"/"+totalNum);
-			
+				tvProcess.setText(finishNum + "/" + totalNum);
+
 				etbarcode.selectAll();
 				etbarcode.requestFocus();
 			default:

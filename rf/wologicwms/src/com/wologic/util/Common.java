@@ -20,7 +20,9 @@ public class Common {
 	
 	public static String partnerName="";
 	
+	public static String UserName="";
 	
+	public static String RealName="";
 
 	public static Date StrToDate(String str) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

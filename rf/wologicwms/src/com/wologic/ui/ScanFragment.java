@@ -54,7 +54,7 @@ public class ScanFragment extends Fragment {
 
 	private TableLayout tl;
 	
-	private TextView tvtitle,tvversion;
+	private TextView tvtitle,tvversion,tvuser;
 	
 	private LinearLayout wologiccalculator;
 
@@ -64,20 +64,10 @@ public class ScanFragment extends Fragment {
 		View view = inflater.inflate(R.layout.scanfragmentpage, null);
 		tl = (TableLayout) view.findViewById(R.id.table1);
 		tvtitle = (TextView) view.findViewById(R.id.tvtitle);
-	
-		wologiccalculator = (LinearLayout)view.findViewById(R.id.wologiccalculator);
-		ruKuDao = new RuKuDao();
-		itemDataDao = new ItemDataDao();
-		functionDao = new WFunctionDao();
-		vinfoDao=new VersionInfoDao();
-		
-		VersionInfo versionInfo=vinfoDao.GetVersionInfo(Common.clientId);
-		if(versionInfo!=null)
-		{
-			tvtitle.setText(versionInfo.getVersionName());
-			tvversion.setText(versionInfo.getVersionId());
-		}
-
+		tvversion=(TextView) view.findViewById(R.id.tvversion);
+		tvuser=(TextView) view.findViewById(R.id.tvuser);
+		tvtitle.setText("·Ö¼ðÏµÍ³"+Common.partnerCode);
+		tvuser.setText(Common.RealName+"("+Common.UserName+")");
 		init();
 		
 		return view;

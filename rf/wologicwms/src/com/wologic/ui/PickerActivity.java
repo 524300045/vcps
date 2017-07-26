@@ -422,7 +422,7 @@ public class PickerActivity extends Activity {
 					tvStoreName.setText(packageDetailList.get(0).getStoredName());
 					outBoundTaskCode=packageDetailList.get(0).getOutboundTaskCode();
 				}
-				tvProcess.setText(finishNum+"/"+totalNum);
+				//tvProcess.setText(finishNum+"/"+totalNum);
 				etStore.requestFocus();
 				etStore.selectAll();
 				break;

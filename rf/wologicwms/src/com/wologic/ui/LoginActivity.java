@@ -4,34 +4,27 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
-import com.wologic.R;
-import com.wologic.application.MyApplication;
-import com.wologic.dao.UserDao;
-import com.wologic.domain.User;
-import com.wologic.util.Common;
-
-import com.wologic.util.Toaster;
+import org.apache.http.client.HttpClient;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.AlertDialog.Builder;
-
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -41,13 +34,20 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-
 import android.widget.Toast;
-import android.widget.AbsListView.OnScrollListener;
+
+import com.alibaba.fastjson.JSON;
+import com.wologic.R;
+import com.wologic.application.MyApplication;
+
+import com.wologic.domainnew.User;
+import com.wologic.request.LoginRequest;
+import com.wologic.util.Common;
+import com.wologic.util.Toaster;
 
 public class LoginActivity extends Activity implements OnItemClickListener {
 
-	private UserDao userDao;
+	
 	private MyApplication app;
 	private Button btn_login, btn_logout;
 	String code = "";
@@ -70,7 +70,7 @@ public class LoginActivity extends Activity implements OnItemClickListener {
 		et_userName = (EditText) findViewById(R.id.et_userName);
 		et_userPassword = (EditText) findViewById(R.id.et_userPassword);
 		//et_userName.setText("10");
-		et_userPassword.setText("001");
+		//et_userPassword.setText("001");
 		
 		btn_login.setOnClickListener(new OnClickListener() {
 
@@ -102,50 +102,110 @@ public class LoginActivity extends Activity implements OnItemClickListener {
 			Toaster.toaster("密码不能为空!");
 			return;
 		}
+		loginSync(code,pwd);
 
-		/*User user = userDao.GetUserByNameAndPwd(code, pwd);
-		if (user == null) {
-
-			// 用户名或密码错误
-			Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_LONG)
-					.show();
-			return;
-		}*/
-		
-		
-		SharedPreferences.Editor editor = getSharedPreferences("data",
-				MODE_PRIVATE).edit();
-		editor.putString("username", code);
-		editor.commit();
-		app.setUsername(code);
-		Common.userID = code;
-		Common.partnerCode=code;
-		Common.partnerName=code;		
-				
-		Intent intent = new Intent(LoginActivity.this, MainTwoActivity.class);
-		startActivity(intent);
-		finish();
 	}
 
 	
-	 public static String getUniquePsuedoID()  
-	 {  
-	     String m_szDevIDShort = "35" + (Build.BOARD.length() % 10) + (Build.BRAND.length() % 10) + (Build.CPU_ABI.length() % 10) + (Build.DEVICE.length() % 10) + (Build.MANUFACTURER.length() % 10) + (Build.MODEL.length() % 10) + (Build.PRODUCT.length() % 10);  
-	   
-	     String serial = null;  
-	     try  
-	     {  
-	         serial = android.os.Build.class.getField("SERIAL").get(null).toString();  
-	   
-	         return new UUID(m_szDevIDShort.hashCode(), serial.hashCode()).toString();  
-	     }  
-	     catch (Exception e)  
-	     {  
-	         serial = "serial"; // some value  
-	     }  
-	     return new UUID(m_szDevIDShort.hashCode(), serial.hashCode()).toString();  
-	 }  
-	 
+	private void loginSync(final String code,final String pwd)
+	{
+		Thread mThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+
+					HttpClient client = com.wologic.util.SimpleClient
+							.getHttpClient();
+
+					String searchUrl ="http://www.bjkalf.net:8090/services/user/checkAndGetUserResource";
+
+					LoginRequest request=new LoginRequest();
+					request.setName(code);
+					request.setPassword(pwd);
+
+					String json = JSON.toJSONString(request);
+					String resultSearch = com.wologic.util.SimpleClient
+							.httpPost(searchUrl, json);
+
+					JSONObject jsonSearch = new JSONObject(resultSearch);
+					if (jsonSearch.optString("code").toString().equals("200"))
+					{
+						User user = JSON
+								.parseObject(jsonSearch
+										.optString("result"),
+										User.class);
+						if(user==null)
+						{
+							Message msg = new Message();
+							msg.what =2;
+							msg.obj ="查询不到客户公司信息";
+							handler.sendMessage(msg);
+						}
+						else
+						{
+							Message msg = new Message();
+							msg.what =1;
+							msg.obj =user;
+							handler.sendMessage(msg);
+						}
+						
+					}
+					else
+					{
+						Message msg = new Message();
+						msg.what =2;
+						msg.obj ="用户名或密码错误";
+						handler.sendMessage(msg);
+					}
+					
+				} catch (Exception e) {
+					System.out.print(e.getMessage());
+					Message msg = new Message();
+					msg.what = 2;
+					msg.obj = "网络异常,请检查单号是否存在";
+					handler.sendMessage(msg);
+				}
+			}
+		});
+		mThread.start();
+		
+	}
+	
+	
+	Handler handler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			switch (msg.what) {
+			case 1:
+				User user=(User)msg.obj;
+				
+				SharedPreferences.Editor editor = getSharedPreferences("data",
+						MODE_PRIVATE).edit();
+				editor.putString("username", code);
+				editor.commit();
+				app.setUsername(code);
+				Common.userID = code;
+				Common.partnerCode=user.getCompanyCode();
+				Common.partnerName=user.getCompanyName();	
+				Common.RealName=user.getCnName();
+				Common.UserName=user.getName();
+				Intent intent = new Intent(LoginActivity.this, MainTwoActivity.class);
+				startActivity(intent);
+				finish();
+				break;
+			case 2:
+			
+				Toaster.toaster(msg.obj.toString());
+				break;
+			case 3:
+				break;
+			default:
+				break;
+			}
+		}
+	};
+
 	 
 	public void showDialog(String title, List<String> list) {
 		AlertDialog.Builder builder = new Builder(this,

@@ -4,239 +4,92 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".Splash" >
-  
-     <LinearLayout
-         android:id="@+id/lltitle"
-         android:layout_width="match_parent"
+
+    <LinearLayout
+        android:id="@+id/lltitle"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="#33CCFF"
         android:gravity="center"
-          android:orientation="horizontal"
-        >
-        
-           <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_weight="1"
-        android:background="#33CCFF"
-        android:gravity="center"
-          android:orientation="vertical"
-        >
-          <TextView
-              android:id="@+id/tvtitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="3dp"
-        android:text="分拣系统"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
-               
-               <!-- <TextView
-                   android:id="@+id/tvversion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:text="Ver.12.06"
-        android:textColor="@color/white"
-        android:textSize="10sp" /> -->
-        
-               </LinearLayout>
-               
-             
-            <!-- <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="未授权"
-        android:textColor="@color/black"
-        android:textSize="11sp" /> -->
-         
-      
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="#33CCFF"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tvtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:text="分拣系统"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvversion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="Ver.1.0"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvuser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="11sp" />
     </LinearLayout>
-    
-     
-    
+
     <LinearLayout
         android:id="@+id/llmokuan"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lltitle"
+        android:layout_marginTop="10dp"
         android:gravity="center" >
-      
-        <TableLayout               
-        android:id="@+id/table1"  
-        android:layout_width="fill_parent"  
-        android:layout_height="wrap_content"  
-        android:stretchColumns="*"
-        android:padding="3dip">  
-        
-            <!--   <TableRow>  
-             <ImageView
-         android:id="@+id/imgpandian"
-        android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:layout_height="48dp"
-        android:src="@drawable/pandian" />
-               <ImageView
-        android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:layout_height="48dp"
-        android:src="@drawable/tuihuo" />
-               
-                 <ImageView
-                     android:id="@+id/imgchuku"
-        android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:layout_height="48dp"
-        android:src="@drawable/chuhuo" />
-                 
-                   <ImageView
-        android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:layout_height="48dp"
-        android:src="@drawable/shouhuo" />
-             
-        </TableRow>  
-        
-        <TableRow>  
-             <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textColor="@color/black"
-        android:gravity="center"
-        android:text="盘点" />
-              <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         android:layout_weight="1"
-        android:gravity="center"
-         android:textColor="@color/black"
-        android:text="退货" />
-               <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         android:layout_weight="1"
-        android:gravity="center"
-         android:textColor="@color/black"
-        android:text="出货" />
-                <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         android:layout_weight="1"
-        android:gravity="center"
-         android:textColor="@color/black"
-        android:text="收货" />
-        </TableRow>  
-          
-              <TextView
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-         android:layout_weight="1"
-        android:gravity="center"
-         android:textColor="@color/black"
-        android:text="" />
-       
-           <TableRow >  
-             <ImageView
-                 android:id="@+id/imgfahuo"
-        android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:layout_height="48dp"
-        android:src="@drawable/fahuo" />
-               <ImageView
-                   android:id="@+id/imgruku"
-        android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:layout_height="48dp"
-        android:src="@drawable/ruku" />
-               
-                 <ImageView
-        android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:layout_height="48dp"
-        android:src="@drawable/dihuo" />
-                 
-                   <ImageView
-                        android:id="@+id/imgmore"
-        android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:layout_height="48dp"
-        android:src="@drawable/geduo" />
-             
-        </TableRow>  
-        
-        <TableRow>  
-             <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textColor="@color/black"
-        android:gravity="center"
-        android:text="发货" />
-              <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         android:layout_weight="1"
-        android:gravity="center"
-         android:textColor="@color/black"
-        android:text="入库" />
-               <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         android:layout_weight="1"
-        android:gravity="center"
-         android:textColor="@color/black"
-        android:text="订货" />
-                <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         android:layout_weight="1"
-        android:gravity="center"
-         android:textColor="@color/black"
-        android:text="更多>" />
-        </TableRow>   -->
-                 
-          
-    </TableLayout>  
-    
-    </LinearLayout>
-    
-     
-    
-     
-     
-     
-     <LinearLayout
-         android:id="@+id/lllv"
-         android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_below="@+id/llmokuan"
-          android:layout_above="@+id/lltable"
-          android:orientation="horizontal"
-          android:layout_marginLeft="10dp"
-          android:layout_marginRight="10dp"
-          android:layout_marginTop="5dp"
-        android:gravity="center"
-        >
-       
-             <ListView
-                 android:id="@+id/lv"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:cacheColorHint="#00000000"
-                 android:dividerHeight="1dp"
-                 android:fadingEdge="none"
-                 android:fastScrollEnabled="true" >
 
-        </ListView>
-        
-         
+        <TableLayout
+            android:id="@+id/table1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dip"
+            android:stretchColumns="*" >
+        </TableLayout>
     </LinearLayout>
     
-     
-        
+    
+      <LinearLayout
+           android:layout_below="@+id/llmokuan"
+          android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="#33CCFF"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tbPartener"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
+         
+        </LinearLayout>
 
 </RelativeLayout>
