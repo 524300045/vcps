@@ -3,7 +3,10 @@ package com.wologic.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
+
+import com.wologic.domainnew.Menu;
 
 public class Common {
 
@@ -23,6 +26,8 @@ public class Common {
 	public static String UserName="";
 	
 	public static String RealName="";
+	
+	public static List<Menu> menuDtos;
 
 	public static Date StrToDate(String str) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

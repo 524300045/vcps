@@ -15,6 +15,8 @@ import com.wologic.dao.WFunctionDao;
 import com.wologic.domain.VersionInfo;
 import com.wologic.domain.WFuction;
 import com.wologic.domain.WorkItem;
+import com.wologic.domainnew.Menu;
+import com.wologic.domainnew.SubMenu;
 import com.wologic.util.Common;
 
 import android.app.Activity;
@@ -110,45 +112,104 @@ public class MainTwoActivity extends Activity {
 		//获取显示的业务信息
 		List<WFuction> list = new ArrayList<WFuction>();
 		
-		WFuction wone=new WFuction();
-		wone.setFuctionid("fj");
-		wone.setFuctionname("分拣(F2)");
+		List<Menu> menuList=Common.menuDtos;
+		List<SubMenu> subMenuList=null;
+		if(menuList!=null)
+		{
+			for(Menu menuItem:menuList)
+			{
+				if(menuItem.getMenuCode().equals("RE00061"))
+				{
+					subMenuList=menuItem.getSubMenus();
+					break;
+				}
+			}
+		}
 		
-		WFuction wtwo=new WFuction();
-		wtwo.setFuctionid("qxfj");
-		wtwo.setFuctionname("解除装箱(F3)");
+		if(subMenuList!=null)
+		{
+			
+			for(SubMenu item:subMenuList)
+			{
+				if(item.getSubMenuCode().equals("RE00062"))
+				{
+					WFuction wone=new WFuction();
+					wone.setFuctionid("fj");
+					wone.setFuctionname("分拣(F2)");
+					list.add(wone);
+				}
+				if(item.getSubMenuCode().equals("RE00064"))
+				{
+					WFuction wtwo=new WFuction();
+					wtwo.setFuctionid("qxfj");
+					wtwo.setFuctionname("解除装箱(F3)");
+					list.add(wtwo);
+				}
+				
+				if(item.getSubMenuCode().equals("RE00063"))
+				{
+					WFuction wPartnerPre=new WFuction();
+					wPartnerPre.setFuctionid("pp");
+					wPartnerPre.setFuctionname("包装装箱(F5)");
+					list.add(wPartnerPre);
+				}
+				
+			}
+			
+		}
 		
-		/*WFuction wThree=new WFuction();
-		wThree.setFuctionid("ex");
-		wThree.setFuctionname("异常处理(F4)");*/
 		
-		
-		WFuction wPartnerPre=new WFuction();
-		wPartnerPre.setFuctionid("pp");
-		wPartnerPre.setFuctionname("包装装箱(F5)");
-		
-		/*WFuction wPartnerOrder=new WFuction();
-		wThree.setFuctionid("po");
-		wThree.setFuctionname("订单加工分拣(F6)");*/
-		
-		
+	
 		WFuction wexit=new WFuction();
 		wexit.setFuctionid("exit");
 		wexit.setFuctionname("重新登录(F1)");
-		
-		
-		list.add(wone);
-		list.add(wtwo);
-		//list.add(wThree);
-		list.add(wPartnerPre);
-		//list.add(wPartnerOrder);
-		//list.add(wfour);
 		list.add(wexit);
 		
 		
 		if (list != null && list.size() > 0) {
-			if (list.size() >= 4) {
+			
+			if(list.size()==1)
+			{
+				TableRow tableRow1 = new TableRow(MainTwoActivity.this);
+				TableRow tableRow2 = new TableRow(MainTwoActivity.this);
+				tl.addView(tableRow1);
+				tl.addView(tableRow2);
+				for (int i = 0; i < 1; i++) {
+					ImageView img = new ImageView(MainTwoActivity.this);
+					
+					ImageFunction imgFunction = new ImageFunction(MainTwoActivity.this,list.get(i).getFuctionid());
+					TextView textView = new TextView(MainTwoActivity.this);
+					textView.setGravity(Gravity.CENTER);
+					textView.setTextColor(Color.parseColor("#000000"));
+					textView.setText(list.get(i).getFuctionname());
 
+					tableRow1.addView(imgFunction);
+					tableRow2.addView(textView);
+				}
+			}
+			
+			if(list.size()==2)
+			{
+				TableRow tableRow1 = new TableRow(MainTwoActivity.this);
+				TableRow tableRow2 = new TableRow(MainTwoActivity.this);
+				tl.addView(tableRow1);
+				tl.addView(tableRow2);
+				for (int i = 0; i < 2; i++) {
+					ImageView img = new ImageView(MainTwoActivity.this);
+					
+					ImageFunction imgFunction = new ImageFunction(MainTwoActivity.this,list.get(i).getFuctionid());
+					TextView textView = new TextView(MainTwoActivity.this);
+					textView.setGravity(Gravity.CENTER);
+					textView.setTextColor(Color.parseColor("#000000"));
+					textView.setText(list.get(i).getFuctionname());
+
+					tableRow1.addView(imgFunction);
+					tableRow2.addView(textView);
+				}
+			}
+			
+			if(list.size()>=3)
+			{
 				TableRow tableRow1 = new TableRow(MainTwoActivity.this);
 				TableRow tableRow2 = new TableRow(MainTwoActivity.this);
 				tl.addView(tableRow1);
@@ -177,7 +238,7 @@ public class MainTwoActivity extends Activity {
 				TableRow tableRow4 = new TableRow(MainTwoActivity.this);
 				tl.addView(tableRow3);
 				tl.addView(tableRow4);
-				for (int i = 2; i < 4; i++) {
+				for (int i = 2; i < list.size(); i++) {
 					ImageView img = new ImageView(MainTwoActivity.this);
 					img.setImageResource(R.drawable.pandian);
 					ImageFunction imgFunction = new ImageFunction(MainTwoActivity.this,list.get(i).getFuctionid());
@@ -191,28 +252,9 @@ public class MainTwoActivity extends Activity {
 					tableRow4.addView(textView);
 				}
 				
-				TableRow tableRow5 = new TableRow(MainTwoActivity.this);
-				TableRow tableRow6 = new TableRow(MainTwoActivity.this);
-				tl.addView(tableRow5);
-				tl.addView(tableRow6);
-				
-				for (int i = 4; i < list.size(); i++) {
-					ImageView img = new ImageView(MainTwoActivity.this);
-					img.setImageResource(R.drawable.pandian);
-					ImageFunction imgFunction = new ImageFunction(MainTwoActivity.this,list.get(i).getFuctionid());
-
-					TextView textView = new TextView(MainTwoActivity.this);
-					textView.setGravity(Gravity.CENTER);
-					textView.setTextColor(Color.parseColor("#000000"));
-					textView.setText(list.get(i).getFuctionname());
-
-					tableRow5.addView(imgFunction);
-					tableRow6.addView(textView);
-				}
-
-			} else {
-				
 			}
+			
+			
 		}
 	}
 //主界面的操作记录信息显示

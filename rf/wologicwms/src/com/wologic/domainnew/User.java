@@ -1,5 +1,7 @@
 package com.wologic.domainnew;
 
+import java.util.List;
+
 public class User {
 
 
@@ -14,6 +16,16 @@ public class User {
     private String companyName ;
 
     private String companyCode ;
+    
+    private List<Menu> menuDtos ;
+
+	public List<Menu> getMenuDtos() {
+		return menuDtos;
+	}
+
+	public void setMenuDtos(List<Menu> menuDtos) {
+		this.menuDtos = menuDtos;
+	}
 
 	public long getId() {
 		return id;

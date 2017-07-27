@@ -196,7 +196,7 @@ public class PartnerPickerActivity extends Activity {
 						int totalNum=Integer.valueOf(splitArr[1]);
 						if(finishNum>=totalNum)
 						{
-							Toaster.toaster("当前门店已经分拣完成");
+							Toaster.toaster("当前门店已经装箱完成");
 							return;
 						}
 						
@@ -363,7 +363,7 @@ public class PartnerPickerActivity extends Activity {
 							if (detail.getStatus() >= 5) {
 								Message msg = new Message();
 								msg.what = 2;
-								msg.obj = "包裹已经分拣过";
+								msg.obj = "包裹已经装箱过";
 								handler.sendMessage(msg);
 							} else {
 								// 跳转到扫描箱号界面

@@ -190,6 +190,7 @@ public class LoginActivity extends Activity implements OnItemClickListener {
 				Common.partnerName=user.getCompanyName();	
 				Common.RealName=user.getCnName();
 				Common.UserName=user.getName();
+				Common.menuDtos=user.getMenuDtos();
 				Intent intent = new Intent(LoginActivity.this, MainTwoActivity.class);
 				startActivity(intent);
 				finish();
