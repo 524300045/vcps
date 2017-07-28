@@ -154,8 +154,14 @@ public class CancelPickerActivity extends Activity {
 								jsonSearch.optString("result"),
 								PackageAllDetail.class);
 						// storeCode=packageDetailList.get(0).getStoredCode();
-
-						if (!detail.getStatus().equals(5)) {
+                        if(detail==null)
+                        {
+                        	Message msg = new Message();
+							msg.what = 2;
+							msg.obj = "查询不打包裹的装箱信息";
+							handler.sendMessage(msg);
+                        }
+                        else if (!detail.getStatus().equals(5)) {
 							Message msg = new Message();
 							msg.what = 2;
 							msg.obj = "当前包裹还未包装";

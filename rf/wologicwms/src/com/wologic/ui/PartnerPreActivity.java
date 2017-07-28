@@ -111,9 +111,6 @@ public class PartnerPreActivity extends Activity {
 			@Override
 			public void run() {
 				try {
-
-				
-							
 							//≤È—Ø‘§∞¸◊∞–≈œ¢
 					    String searchUrl = Constant.url
 									+ "/preprocessInfo/getPreprocessInfoByCode";
@@ -179,13 +176,10 @@ public class PartnerPreActivity extends Activity {
 						if (boxCode.equals("")) {
 							etBoxCode.selectAll();
 							Toaster.toaster("«Î…®√Ëœ‰∫≈!");
-							
 							mediaPlayer.setVolume(1.0f, 1.0f);
 							mediaPlayer.start();
 							tvmsg.setVisibility(View.VISIBLE);
 							tvmsg.setText("«Î…®√Ëœ‰∫≈");
-							
-							
 							return true;
 						}
 						etbarcode.requestFocus();
@@ -258,7 +252,8 @@ public class PartnerPreActivity extends Activity {
 			Toaster.toaster("«Î…®√Ë∞¸π¸∫≈!");
 			return;
 		}
-
+		etbarcode.setEnabled(false);
+		
 		// ≈–∂œœ‰∫≈ «∑Ò « Ù”⁄µ±«∞√≈µÍµƒ
 
 		Thread mThread = new Thread(new Runnable() {
@@ -451,10 +446,11 @@ public class PartnerPreActivity extends Activity {
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case 1:
-
+				etbarcode.setEnabled(true);
 				etBoxCode.requestFocus();
 				break;
 			case 2:
+				etbarcode.setEnabled(true);
 				etBoxCode.selectAll();
 				etBoxCode.requestFocus();
 				Toaster.toaster(msg.obj.toString());
@@ -464,6 +460,7 @@ public class PartnerPreActivity extends Activity {
 				tvmsg.setText(msg.obj.toString());
 				break;
 			case 3:
+				etbarcode.setEnabled(true);
 				etbarcode.selectAll();
 				etbarcode.requestFocus();
 				mediaPlayer.setVolume(1.0f, 1.0f);
@@ -472,6 +469,7 @@ public class PartnerPreActivity extends Activity {
 				tvmsg.setText(msg.obj.toString());
 				break;
 			case 4:
+				etbarcode.setEnabled(true);
 				tvProcess.setText(processInfo);
 				etbarcode.setText("");
 				etbarcode.selectAll();
@@ -483,6 +481,7 @@ public class PartnerPreActivity extends Activity {
 				tvmsg.setText(msg.obj.toString());
 				break;
 			case 5:
+				etbarcode.setEnabled(true);
 				PreprocessInfo preprocessInfo=(PreprocessInfo)msg.obj;
 				tvGoodsName.setText(preprocessInfo.getGoodsName());
 				goodsName=preprocessInfo.getGoodsName();
@@ -490,7 +489,7 @@ public class PartnerPreActivity extends Activity {
 				tvWeight.setText(preprocessInfo.getPackWeight().toString());
 				break;
 			case 6:
-				
+				etbarcode.setEnabled(true);
 				  Intent  data= new Intent();   
 	              data.putExtra("returnmsg","");  
 	              setResult(Activity.RESULT_OK,data);  
@@ -498,6 +497,7 @@ public class PartnerPreActivity extends Activity {
 	              
 				break;
 			default:
+				etbarcode.setEnabled(true);
 				break;
 			}
 		}

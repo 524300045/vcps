@@ -165,6 +165,7 @@ public class PartnerOrderActivity extends Activity {
 							tvmsg.setText("请扫描箱号!");
 							return true;
 						}
+						etBoxCode.setEnabled(false);
 						getPreProcessDetail(code);
 						break;
 					case KeyEvent.ACTION_DOWN:
@@ -320,6 +321,7 @@ public class PartnerOrderActivity extends Activity {
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case 1:
+				etBoxCode.setEnabled(true);
 				PackageAllDetail detail = (PackageAllDetail) msg.obj;
 				tvTotalProcess.setText(detail.getTotalProcess());
 				tvProcess.setText(detail.getStoreProcess());
@@ -336,7 +338,7 @@ public class PartnerOrderActivity extends Activity {
 
 				break;
 			case 2:
-				
+				etBoxCode.setEnabled(true);
 				mediaPlayer.setVolume(1.0f, 1.0f);
 				mediaPlayer.start();
 				tvmsg.setVisibility(View.VISIBLE);
@@ -346,14 +348,17 @@ public class PartnerOrderActivity extends Activity {
 				etBoxCode.requestFocus();
 				break;
 			case 3:
+				etBoxCode.setEnabled(true);
 				// 提交成功
 				Toaster.toaster(msg.obj.toString());
 				finish();
 				break;
 			case 5:
+				etBoxCode.setEnabled(true);
 				tvProcess.setText(msg.obj.toString());
 				break;
 			default:
+				etBoxCode.setEnabled(true);
 				break;
 			}
 		}

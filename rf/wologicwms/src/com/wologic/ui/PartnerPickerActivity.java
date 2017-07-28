@@ -145,6 +145,7 @@ public class PartnerPickerActivity extends Activity {
 
 							return true;
 						}
+						etPackageCode.setEnabled(false);
 						getPackageDetail(packageCode);
 						break;
 					case KeyEvent.ACTION_DOWN:
@@ -189,7 +190,7 @@ public class PartnerPickerActivity extends Activity {
 				if(!tvProcess.getText().toString().equals(""))
 				{
 					String[] splitArr=tvProcess.getText().toString().split("/");
-					if(splitArr.length==1)
+					if(splitArr.length==2)
 					{
 						
 						int finishNum=Integer.valueOf(splitArr[0]);
@@ -401,6 +402,7 @@ public class PartnerPickerActivity extends Activity {
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case 1:
+				etPackageCode.setEnabled(true);
 				PackageAllDetail detail = (PackageAllDetail) msg.obj;
 				// °ó¶¨
 				Intent intent = new Intent(PartnerPickerActivity.this,
@@ -411,6 +413,7 @@ public class PartnerPickerActivity extends Activity {
 				startActivityForResult(intent, 0);
 				break;
 			case 2:
+				etPackageCode.setEnabled(true);
 				tvmsg.setText(msg.obj.toString());
 				tvmsg.setVisibility(View.VISIBLE);
 				mediaPlayer.setVolume(1.0f, 1.0f);
@@ -420,6 +423,7 @@ public class PartnerPickerActivity extends Activity {
 				etPackageCode.requestFocus();
 				break;
 			case 3:
+				etPackageCode.setEnabled(true);
 				tvmsg.setVisibility(View.VISIBLE);
 				tvmsg.setText(msg.obj.toString());
 				mediaPlayer.setVolume(1.0f, 1.0f);
@@ -428,11 +432,13 @@ public class PartnerPickerActivity extends Activity {
 				etPackageCode.requestFocus();
 				break;
 			case 4:
+				etPackageCode.setEnabled(true);
 				tvGoodsName.setText(goodsName);
 				ll.setVisibility(View.VISIBLE);
 				bindList();
 				break;
 			default:
+				etPackageCode.setEnabled(true);
 				break;
 			}
 		}
@@ -471,7 +477,7 @@ public class PartnerPickerActivity extends Activity {
 						PackTaskDetailRequest packTaskDetailRequest = new PackTaskDetailRequest();
 						packTaskDetailRequest
 								.setSkuCode(skuCode);
-				      
+						packTaskDetailRequest.setPartnerCode(Common.partnerCode);
 						String json4 = JSON
 								.toJSONString(packTaskDetailRequest);
 						String resultSearch4 = com.wologic.util.SimpleClient

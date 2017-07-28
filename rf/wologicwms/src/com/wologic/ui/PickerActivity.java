@@ -108,6 +108,7 @@ public class PickerActivity extends Activity {
 							return true;
 						}
 						tvProcess.setText("");
+						etbarcode.setEnabled(false);
 						getPackageDetail(packageCode);
 						break;
 					case KeyEvent.ACTION_DOWN:
@@ -316,7 +317,9 @@ public class PickerActivity extends Activity {
 			mediaPlayer.start();
 			return;
 		}
-
+		etbarcode.setEnabled(false);
+		etStore.setEnabled(false);
+		btnSure.setEnabled(false);
 		// 获取门店信息
 		Thread mThread = new Thread(new Runnable() {
 			@Override
@@ -424,6 +427,9 @@ public class PickerActivity extends Activity {
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case 1:
+				etbarcode.setEnabled(true);
+				etStore.setEnabled(true);
+				btnSure.setEnabled(true);
 				List<PackageAllDetail> packageDetailList=(List<PackageAllDetail>)msg.obj;
 				int totalNum=0;
 				int finishNum=0;
@@ -446,6 +452,9 @@ public class PickerActivity extends Activity {
 				etStore.selectAll();
 				break;
 			case 2:
+				etbarcode.setEnabled(true);
+				etStore.setEnabled(true);
+				btnSure.setEnabled(true);
 				etbarcode.selectAll();
 				etbarcode.requestFocus();
 				Toaster.toaster(msg.obj.toString());
@@ -455,6 +464,9 @@ public class PickerActivity extends Activity {
 				mediaPlayer.start();
 				break;
 			case 3:
+				etbarcode.setEnabled(true);
+				etStore.setEnabled(true);
+				btnSure.setEnabled(true);
 				etStore.selectAll();
 				etStore.requestFocus();
 				Toaster.toaster(msg.obj.toString());
@@ -464,6 +476,9 @@ public class PickerActivity extends Activity {
 				mediaPlayer.start();
 				break;
 			case 4:
+				etbarcode.setEnabled(true);
+				etStore.setEnabled(true);
+				btnSure.setEnabled(true);
 				etStore.setText("");
 				etbarcode.setText("");
 				etbarcode.requestFocus();
@@ -474,9 +489,15 @@ public class PickerActivity extends Activity {
 //				mediaPlayer.start();
 				break;
 			case 5:
+				etbarcode.setEnabled(true);
+				etStore.setEnabled(true);
+				btnSure.setEnabled(true);
 				tvProcess.setText(msg.obj.toString());
 				break;
 			default:
+				etbarcode.setEnabled(true);
+				etStore.setEnabled(true);
+				btnSure.setEnabled(true);
 				break;
 			}
 		}
