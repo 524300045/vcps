@@ -234,7 +234,7 @@ public class PartnerOrderActivity extends Activity {
 					HttpClient client = com.wologic.util.SimpleClient
 							.getHttpClient();
 
-					String searchUrl = Constant.url + "/boxInfo/getBoxInfoCode";
+					String searchUrl = Constant.url + "/boxInfo/getBoxInfoCodeTwo";
 
 					BoxInfoRequest boxInfoRequest = new BoxInfoRequest();
 					boxInfoRequest.setBoxCode(boxCode);
@@ -251,7 +251,15 @@ public class PartnerOrderActivity extends Activity {
 							msg.what = 2;
 							msg.obj = "查询不到箱号信息";
 							handler.sendMessage(msg);
-						} else {
+						} 
+						else if (jsonSearch.optString("code").toString().equals("302"))
+						{
+							Message msg = new Message();
+							msg.what = 2;
+							msg.obj =jsonSearch.optString("message");
+							handler.sendMessage(msg);
+						}
+						else {
 							// 判断箱号是否已经使用
 
 							BoxInfo boxInfo = JSON.parseObject(
