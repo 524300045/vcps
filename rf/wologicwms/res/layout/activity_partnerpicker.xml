@@ -65,7 +65,7 @@
                 android:gravity="center"
                 android:text="包裹号"
                 android:textColor="#333333"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.wologic.control.UnderLineEditText
                 android:id="@+id/etPackageCode"
@@ -104,7 +104,7 @@
                 android:gravity="center"
                 android:text="名称:"
                 android:textColor="#333333"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/tvGoodsName"
@@ -114,7 +114,7 @@
                 android:gravity="center"
                 android:text=""
                 android:textColor="#333333"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
         </LinearLayout>
         
         <LinearLayout
@@ -134,7 +134,7 @@
                 android:gravity="center"
                 android:text="总进度(包装数):"
                 android:textColor="#333333"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/tvProcess"
@@ -144,7 +144,7 @@
                 android:gravity="center"
                 android:text=""
                 android:textColor="#333333"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -174,7 +174,7 @@
                     android:gravity="left"
                     android:text="门店"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -182,7 +182,7 @@
                     android:gravity="left"
                     android:text="已装箱/需求 包装数"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="17sp" />
             </LinearLayout>
 
             <ListView
