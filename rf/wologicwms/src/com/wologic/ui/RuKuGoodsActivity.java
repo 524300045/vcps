@@ -19,8 +19,7 @@ import com.wologic.domain.ItemData;
 import com.wologic.domain.Parameter;
 import com.wologic.domain.WorkItem;
 import com.wologic.ui.ChuKuGoodsActivity.SpecialAdapter;
-import com.wologic.ui.LoginActivity.MyAdapter;
-import com.wologic.ui.LoginActivity.ViewHolder;
+
 import com.wologic.util.Common;
 import com.wologic.util.Toaster;
 

@@ -29,7 +29,7 @@ import com.wologic.domain.Parameter;
 import com.wologic.domain.Product;
 import com.wologic.domain.WorkItem;
 
-import com.wologic.ui.LoginActivity.MyAdapter;
+
 import com.wologic.util.Common;
 import com.wologic.util.Constant;
 import com.wologic.util.CsvUtil;

@@ -7,7 +7,7 @@ public class Constant {
 
 	// Urlµÿ÷∑http://api.cooperate.bjkalf.net:8080/services/goods/getGoodsList
 
-	//public static String url=" http://192.168.0.113:8089/webservice/services";
+	public static String url=" http://192.168.1.84:8089/webservice/services";
 
-    public static String url = "http://api.cooperate.bjkalf.net:8080/services";
+   // public static String url = "http://api.cooperate.bjkalf.net:8080/services";
 }
